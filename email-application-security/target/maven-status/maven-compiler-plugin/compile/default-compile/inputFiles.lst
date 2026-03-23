@@ -1,8 +1,0 @@
-/home/robert/IdeaProjects/email/email-application-security/src/main/java/com/jrobertgardzinski/email/external/MxRecordPort.java
-/home/robert/IdeaProjects/email/email-application-security/src/main/java/com/jrobertgardzinski/email/policy/CanRegister.java
-/home/robert/IdeaProjects/email/email-application-security/src/main/java/com/jrobertgardzinski/email/policy/CanResetPassword.java
-/home/robert/IdeaProjects/email/email-application-security/src/main/java/com/jrobertgardzinski/email/policy/_BlockedDomainConstraint.java
-/home/robert/IdeaProjects/email/email-application-security/src/main/java/com/jrobertgardzinski/email/policy/_DisposableEmailConstraint.java
-/home/robert/IdeaProjects/email/email-application-security/src/main/java/com/jrobertgardzinski/email/policy/_IsEmployeeConstraint.java
-/home/robert/IdeaProjects/email/email-application-security/src/main/java/com/jrobertgardzinski/email/policy/_MxRecordConstraint.java
-/home/robert/IdeaProjects/email/email-application-security/src/main/java/com/jrobertgardzinski/email/policy/_RfcFormatConstraint.java
