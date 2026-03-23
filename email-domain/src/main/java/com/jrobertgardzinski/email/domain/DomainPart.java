@@ -12,7 +12,7 @@ public final class DomainPart {
 
     private final String value;
 
-    DomainPart(String value) {
+    public DomainPart(String value) {
         this.value = value;
     }
 
