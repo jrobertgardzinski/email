@@ -1,0 +1,4 @@
+com/jrobertgardzinski/email/config/DisposableDomains.class
+com/jrobertgardzinski/email/config/port/EmailConfigPort.class
+com/jrobertgardzinski/email/config/CompanyDomains.class
+com/jrobertgardzinski/email/config/BlockedDomains.class

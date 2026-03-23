@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.jrobertgardzinski.email.domain.RunCucumberTest" time="0.165" tests="9" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="25"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/home/robert/Documents/git/portfolio/email/email-security/email-security-system/target/test-classes:/home/robert/Documents/git/portfolio/email/email-security/email-security-system/target/classes:/home/robert/.m2/repository/com/jrobertgardzinski/lib-util/1.0-SNAPSHOT/lib-util-1.0-SNAPSHOT.jar:/home/robert/Documents/git/portfolio/email/email-domain/target/email-domain-1.0-SNAPSHOT.jar:/home/robert/Documents/git/portfolio/email/email-security/email-security-config/target/email-security-config-1.0-SNAPSHOT.jar:/home/robert/.m2/repository/com/jrobertgardzinski/bdd-test-starter/1.0.0/bdd-test-starter-1.0.0.jar:/home/robert/.m2/repository/com/jrobertgardzinski/unit-test-starter/1.0.0/unit-test-starter-1.0.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter/5.14.0/junit-jupiter-5.14.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.14.0/junit-jupiter-api-5.14.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.14.0/junit-jupiter-engine-5.14.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.14.0/junit-jupiter-params-5.14.0.jar:/home/robert/.m2/repository/org/mockito/mockito-core/5.14.2/mockito-core-5.14.2.jar:/home/robert/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.4/byte-buddy-agent-1.15.4.jar:/home/robert/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/robert/.m2/repository/org/mockito/mockito-junit-jupiter/5.14.2/mockito-junit-jupiter-5.14.2.jar:/home/robert/.m2/repository/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-java/7.33.0/cucumber-java-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-core/7.33.0/cucumber-core-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-gherkin/7.33.0/cucumber-gherkin-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-gherkin-messages/7.33.0/cucumber-gherkin-messages-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/gherkin/36.1.0/gherkin-36.1.0.jar:/home/robert/.m2/repository/io/cucumber/messages/30.1.0/messages-30.1.0.jar:/home/robert/.m2/repository/io/cucumber/pretty-formatter/2.4.1/pretty-formatter-2.4.1.jar:/home/robert/.m2/repository/io/cucumber/query/14.7.0/query-14.7.0.jar:/home/robert/.m2/repository/io/cucumber/teamcity-formatter/0.2.0/teamcity-formatter-0.2.0.jar:/home/robert/.m2/repository/io/cucumber/testng-xml-formatter/0.7.0/testng-xml-formatter-0.7.0.jar:/home/robert/.m2/repository/io/cucumber/usage-formatter/0.1.0/usage-formatter-0.1.0.jar:/home/robert/.m2/repository/io/cucumber/tag-expressions/8.1.0/tag-expressions-8.1.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-expressions/18.0.1/cucumber-expressions-18.0.1.jar:/home/robert/.m2/repository/io/cucumber/cucumber-json-formatter/0.3.2/cucumber-json-formatter-0.3.2.jar:/home/robert/.m2/repository/io/cucumber/datatable/7.33.0/datatable-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-plugin/7.33.0/cucumber-plugin-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/docstring/7.33.0/docstring-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/html-formatter/22.2.0/html-formatter-22.2.0.jar:/home/robert/.m2/repository/io/cucumber/junit-xml-formatter/0.11.0/junit-xml-formatter-0.11.0.jar:/home/robert/.m2/repository/io/cucumber/ci-environment/12.0.0/ci-environment-12.0.0.jar:/home/robert/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/robert/.m2/repository/io/cucumber/cucumber-picocontainer/7.33.0/cucumber-picocontainer-7.33.0.jar:/home/robert/.m2/repository/org/picocontainer/picocontainer/2.15.2/picocontainer-2.15.2.jar:/home/robert/.m2/repository/io/cucumber/cucumber-junit-platform-engine/7.33.0/cucumber-junit-platform-engine-7.33.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-engine/1.14.1/junit-platform-engine-1.14.1.jar:/home/robert/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-commons/1.14.1/junit-platform-commons-1.14.1.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-suite/1.14.0/junit-platform-suite-1.14.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-suite-api/1.14.0/junit-platform-suite-api-1.14.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-suite-engine/1.14.0/junit-platform-suite-engine-1.14.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-suite-commons/1.14.0/junit-platform-suite-commons-1.14.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-launcher/1.14.0/junit-platform-launcher-1.14.0.jar:/home/robert/.m2/repository/org/assertj/assertj-core/3.27.7/assertj-core-3.27.7.jar:/home/robert/.m2/repository/net/bytebuddy/byte-buddy/1.18.3/byte-buddy-1.18.3.jar:"/>
+    <property name="java.vm.vendor" value="Amazon.com Inc."/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://aws.amazon.com/corretto/"/>
+    <property name="user.timezone" value="Europe/Warsaw"/>
+    <property name="os.name" value="Linux"/>
+    <property name="java.vm.specification.version" value="25"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/home/robert/.jdks/corretto-25.0.2/lib"/>
+    <property name="sun.java.command" value="/home/robert/Documents/git/portfolio/email/email-security/email-security-system/target/surefire/surefirebooter-20260322231002059_6.jar /home/robert/Documents/git/portfolio/email/email-security/email-security-system/target/surefire 2026-03-22T23-10-00_856-jvmRun1 surefire-20260322231002059_4tmp surefire_1-20260322231002059_5tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/home/robert/Documents/git/portfolio/email/email-security/email-security-system/target/test-classes:/home/robert/Documents/git/portfolio/email/email-security/email-security-system/target/classes:/home/robert/.m2/repository/com/jrobertgardzinski/lib-util/1.0-SNAPSHOT/lib-util-1.0-SNAPSHOT.jar:/home/robert/Documents/git/portfolio/email/email-domain/target/email-domain-1.0-SNAPSHOT.jar:/home/robert/Documents/git/portfolio/email/email-security/email-security-config/target/email-security-config-1.0-SNAPSHOT.jar:/home/robert/.m2/repository/com/jrobertgardzinski/bdd-test-starter/1.0.0/bdd-test-starter-1.0.0.jar:/home/robert/.m2/repository/com/jrobertgardzinski/unit-test-starter/1.0.0/unit-test-starter-1.0.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter/5.14.0/junit-jupiter-5.14.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.14.0/junit-jupiter-api-5.14.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.14.0/junit-jupiter-engine-5.14.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.14.0/junit-jupiter-params-5.14.0.jar:/home/robert/.m2/repository/org/mockito/mockito-core/5.14.2/mockito-core-5.14.2.jar:/home/robert/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.4/byte-buddy-agent-1.15.4.jar:/home/robert/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/robert/.m2/repository/org/mockito/mockito-junit-jupiter/5.14.2/mockito-junit-jupiter-5.14.2.jar:/home/robert/.m2/repository/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-java/7.33.0/cucumber-java-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-core/7.33.0/cucumber-core-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-gherkin/7.33.0/cucumber-gherkin-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-gherkin-messages/7.33.0/cucumber-gherkin-messages-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/gherkin/36.1.0/gherkin-36.1.0.jar:/home/robert/.m2/repository/io/cucumber/messages/30.1.0/messages-30.1.0.jar:/home/robert/.m2/repository/io/cucumber/pretty-formatter/2.4.1/pretty-formatter-2.4.1.jar:/home/robert/.m2/repository/io/cucumber/query/14.7.0/query-14.7.0.jar:/home/robert/.m2/repository/io/cucumber/teamcity-formatter/0.2.0/teamcity-formatter-0.2.0.jar:/home/robert/.m2/repository/io/cucumber/testng-xml-formatter/0.7.0/testng-xml-formatter-0.7.0.jar:/home/robert/.m2/repository/io/cucumber/usage-formatter/0.1.0/usage-formatter-0.1.0.jar:/home/robert/.m2/repository/io/cucumber/tag-expressions/8.1.0/tag-expressions-8.1.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-expressions/18.0.1/cucumber-expressions-18.0.1.jar:/home/robert/.m2/repository/io/cucumber/cucumber-json-formatter/0.3.2/cucumber-json-formatter-0.3.2.jar:/home/robert/.m2/repository/io/cucumber/datatable/7.33.0/datatable-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/cucumber-plugin/7.33.0/cucumber-plugin-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/docstring/7.33.0/docstring-7.33.0.jar:/home/robert/.m2/repository/io/cucumber/html-formatter/22.2.0/html-formatter-22.2.0.jar:/home/robert/.m2/repository/io/cucumber/junit-xml-formatter/0.11.0/junit-xml-formatter-0.11.0.jar:/home/robert/.m2/repository/io/cucumber/ci-environment/12.0.0/ci-environment-12.0.0.jar:/home/robert/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/robert/.m2/repository/io/cucumber/cucumber-picocontainer/7.33.0/cucumber-picocontainer-7.33.0.jar:/home/robert/.m2/repository/org/picocontainer/picocontainer/2.15.2/picocontainer-2.15.2.jar:/home/robert/.m2/repository/io/cucumber/cucumber-junit-platform-engine/7.33.0/cucumber-junit-platform-engine-7.33.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-engine/1.14.1/junit-platform-engine-1.14.1.jar:/home/robert/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-commons/1.14.1/junit-platform-commons-1.14.1.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-suite/1.14.0/junit-platform-suite-1.14.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-suite-api/1.14.0/junit-platform-suite-api-1.14.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-suite-engine/1.14.0/junit-platform-suite-engine-1.14.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-suite-commons/1.14.0/junit-platform-suite-commons-1.14.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-launcher/1.14.0/junit-platform-launcher-1.14.0.jar:/home/robert/.m2/repository/org/assertj/assertj-core/3.27.7/assertj-core-3.27.7.jar:/home/robert/.m2/repository/net/bytebuddy/byte-buddy/1.18.3/byte-buddy-1.18.3.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/robert"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2026-01-20"/>
+    <property name="java.home" value="/home/robert/.jdks/corretto-25.0.2"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/home/robert/Documents/git/portfolio/email/email-security/email-security-system"/>
+    <property name="style.color" value="always"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="/home/robert/Documents/git/portfolio/email/email-security/email-security-system/target/surefire/surefirebooter-20260322231002059_6.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="25.0.2+10-LTS"/>
+    <property name="user.name" value="robert"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="6.17.0-19-generic"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Corretto-25.0.2.10.1"/>
+    <property name="maven.ext.class.path" value="/snap/intellij-idea-community/725/plugins/maven/lib/maven-event-listener.jar"/>
+    <property name="localRepository" value="/home/robert/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/corretto/corretto-25/issues/"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="idea.version" value="2025.3.3"/>
+    <property name="java.version" value="25.0.2"/>
+    <property name="user.dir" value="/home/robert/Documents/git/portfolio/email/email-security/email-security-system"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="jansi.passthrough" value="true"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Amazon.com Inc."/>
+    <property name="java.vm.version" value="25.0.2+10-LTS"/>
+    <property name="stdin.encoding" value="UTF-8"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="maven.repo.local" value="/home/robert/.m2/repository"/>
+    <property name="java.class.version" value="69.0"/>
+  </properties>
+  <testcase name="Email satisfies all blocking constraints — registration is allowed" classname="Registration eligibility" time="0.071">
+    <system-out><![CDATA[
+&amp#27;[1mScenario:&amp#27;[22m Email satisfies all blocking constraints — registration is allowed &amp#27;[90m# classpath:com/jrobertgardzinski/email/policy/can-register.feature:15&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mGiven &amp#27;[22ma valid email &amp#27;[1m"user@example.com"&amp#27;[22m&amp#27;[39m                                   &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.aValidEmail(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mWhen &amp#27;[22mregistration eligibility is evaluated&amp#27;[39m                               &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationEligibilityIsEvaluated()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mThen &amp#27;[22mregistration is allowed&amp#27;[39m                                             &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationIsAllowed()&amp#27;[39m
+]]></system-out>
+  </testcase>
+  <testcase name="Domain has no MX record — registration is allowed with a warning" classname="Registration eligibility" time="0.003">
+    <system-out><![CDATA[
+&amp#27;[1mScenario:&amp#27;[22m Domain has no MX record — registration is allowed with a warning &amp#27;[90m# classpath:com/jrobertgardzinski/email/policy/can-register.feature:33&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mGiven &amp#27;[22ma valid email &amp#27;[1m"user@ghost-domain.com"&amp#27;[22m&amp#27;[39m                            &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.aValidEmail(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mAnd &amp#27;[22m&amp#27;[1m"ghost-domain.com"&amp#27;[22m has no MX record&amp#27;[39m                                &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.hasNoMxRecord(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mWhen &amp#27;[22mregistration eligibility is evaluated with active constraints&amp#27;[39m     &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationEligibilityIsEvaluatedWithActiveConstraints()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mThen &amp#27;[22mregistration is allowed&amp#27;[39m                                           &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationIsAllowed()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mAnd &amp#27;[22ma warning &amp#27;[1m"NO_MX_RECORD"&amp#27;[22m is raised&amp#27;[39m                                 &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.aWarningIsRaised(java.lang.String)&amp#27;[39m
+]]></system-out>
+  </testcase>
+  <testcase name="Example #1.1" classname="Examples" time="0.005">
+    <system-out><![CDATA[
+&amp#27;[1mScenario Outline:&amp#27;[22m Email violates a blocking constraint — registration is rejected &amp#27;[90m# classpath:com/jrobertgardzinski/email/policy/can-register.feature:28&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mGiven &amp#27;[22man email &amp#27;[1m"user space@test.com"&amp#27;[22m&amp#27;[39m                                          &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.anEmail(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mAnd &amp#27;[22m&amp#27;[1m"-"&amp#27;[22m is configured as a &amp#27;[1m"-"&amp#27;[22m domain&amp#27;[39m                                         &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.isConfiguredAsTypedDomain(java.lang.String,java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mWhen &amp#27;[22mregistration eligibility is evaluated with active constraints&amp#27;[39m            &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationEligibilityIsEvaluatedWithActiveConstraints()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mThen &amp#27;[22mregistration is rejected with violation &amp#27;[1m"RFC_FORMAT_INVALID"&amp#27;[22m&amp#27;[39m             &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationIsRejectedWithViolation(java.lang.String)&amp#27;[39m
+]]></system-out>
+  </testcase>
+  <testcase name="Example #1.2" classname="Examples" time="0.002">
+    <system-out><![CDATA[
+&amp#27;[1mScenario Outline:&amp#27;[22m Email violates a blocking constraint — registration is rejected &amp#27;[90m# classpath:com/jrobertgardzinski/email/policy/can-register.feature:29&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mGiven &amp#27;[22man email &amp#27;[1m"user@mailinator.com"&amp#27;[22m&amp#27;[39m                                          &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.anEmail(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mAnd &amp#27;[22m&amp#27;[1m"mailinator.com"&amp#27;[22m is configured as a &amp#27;[1m"disposable"&amp#27;[22m domain&amp#27;[39m                   &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.isConfiguredAsTypedDomain(java.lang.String,java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mWhen &amp#27;[22mregistration eligibility is evaluated with active constraints&amp#27;[39m            &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationEligibilityIsEvaluatedWithActiveConstraints()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mThen &amp#27;[22mregistration is rejected with violation &amp#27;[1m"DISPOSABLE_DOMAIN"&amp#27;[22m&amp#27;[39m              &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationIsRejectedWithViolation(java.lang.String)&amp#27;[39m
+]]></system-out>
+  </testcase>
+  <testcase name="Example #1.3" classname="Examples" time="0.002">
+    <system-out><![CDATA[
+&amp#27;[1mScenario Outline:&amp#27;[22m Email violates a blocking constraint — registration is rejected &amp#27;[90m# classpath:com/jrobertgardzinski/email/policy/can-register.feature:30&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mGiven &amp#27;[22man email &amp#27;[1m"user@spammer.com"&amp#27;[22m&amp#27;[39m                                             &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.anEmail(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mAnd &amp#27;[22m&amp#27;[1m"spammer.com"&amp#27;[22m is configured as a &amp#27;[1m"blacklisted"&amp#27;[22m domain&amp#27;[39m                     &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.isConfiguredAsTypedDomain(java.lang.String,java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mWhen &amp#27;[22mregistration eligibility is evaluated with active constraints&amp#27;[39m            &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationEligibilityIsEvaluatedWithActiveConstraints()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mThen &amp#27;[22mregistration is rejected with violation &amp#27;[1m"DOMAIN_BLOCKED"&amp#27;[22m&amp#27;[39m                 &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationIsRejectedWithViolation(java.lang.String)&amp#27;[39m
+]]></system-out>
+  </testcase>
+  <testcase name="Example #1.4" classname="Examples" time="0.002">
+    <system-out><![CDATA[
+&amp#27;[1mScenario Outline:&amp#27;[22m Email violates a blocking constraint — registration is rejected &amp#27;[90m# classpath:com/jrobertgardzinski/email/policy/can-register.feature:31&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mGiven &amp#27;[22man email &amp#27;[1m"user@gmail.com"&amp#27;[22m&amp#27;[39m                                               &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.anEmail(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mAnd &amp#27;[22m&amp#27;[1m"acme.com"&amp#27;[22m is configured as a &amp#27;[1m"company-only"&amp#27;[22m domain&amp#27;[39m                       &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.isConfiguredAsTypedDomain(java.lang.String,java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mWhen &amp#27;[22mregistration eligibility is evaluated with active constraints&amp#27;[39m            &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationEligibilityIsEvaluatedWithActiveConstraints()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mThen &amp#27;[22mregistration is rejected with violation &amp#27;[1m"NOT_A_COMPANY_DOMAIN"&amp#27;[22m&amp#27;[39m           &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.registrationIsRejectedWithViolation(java.lang.String)&amp#27;[39m
+]]></system-out>
+  </testcase>
+  <testcase name="Valid email can request a password reset" classname="Password reset eligibility" time="0.003">
+    <system-out><![CDATA[
+&amp#27;[1mScenario:&amp#27;[22m Valid email can request a password reset &amp#27;[90m# classpath:com/jrobertgardzinski/email/policy/can-reset-password.feature:3&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mGiven &amp#27;[22ma valid email &amp#27;[1m"user@example.com"&amp#27;[22m&amp#27;[39m         &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.aValidEmail(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mWhen &amp#27;[22mpassword reset eligibility is evaluated&amp#27;[39m   &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.passwordResetEligibilityIsEvaluated()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mThen &amp#27;[22mpassword reset is allowed&amp#27;[39m                 &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.passwordResetIsAllowed()&amp#27;[39m
+]]></system-out>
+  </testcase>
+  <testcase name="Malformed email cannot request a password reset" classname="Password reset eligibility" time="0.001">
+    <system-out><![CDATA[
+&amp#27;[1mScenario:&amp#27;[22m Malformed email cannot request a password reset               &amp#27;[90m# classpath:com/jrobertgardzinski/email/policy/can-reset-password.feature:8&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mGiven &amp#27;[22man email with invalid format &amp#27;[1m"user space@example.com"&amp#27;[22m&amp#27;[39m         &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.anEmailWithInvalidFormat(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mWhen &amp#27;[22mpassword reset eligibility is evaluated&amp#27;[39m                        &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.passwordResetEligibilityIsEvaluated()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mThen &amp#27;[22mpassword reset is rejected with violation &amp#27;[1m"RFC_FORMAT_INVALID"&amp#27;[22m&amp#27;[39m &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.passwordResetIsRejectedWithViolation(java.lang.String)&amp#27;[39m
+]]></system-out>
+  </testcase>
+  <testcase name="Email from a blacklisted domain cannot request a password reset" classname="Password reset eligibility" time="0.001">
+    <system-out><![CDATA[
+&amp#27;[1mScenario:&amp#27;[22m Email from a blacklisted domain cannot request a password reset &amp#27;[90m# classpath:com/jrobertgardzinski/email/policy/can-reset-password.feature:13&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mGiven &amp#27;[22ma valid email &amp#27;[1m"user@spammer.com"&amp#27;[22m&amp#27;[39m                                &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.aValidEmail(java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mAnd &amp#27;[22m&amp#27;[1m"spammer.com"&amp#27;[22m is a &amp#27;[1m"blacklisted"&amp#27;[22m domain&amp#27;[39m                           &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.isATypedDomain(java.lang.String,java.lang.String)&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mWhen &amp#27;[22mpassword reset eligibility is evaluated with extended checks&amp#27;[39m     &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.passwordResetEligibilityIsEvaluatedWithExtendedChecks()&amp#27;[39m
+  &amp#27;[32m✔&amp#27;[39m &amp#27;[32m&amp#27;[1mThen &amp#27;[22mpassword reset is rejected with violation &amp#27;[1m"DOMAIN_BLOCKED"&amp#27;[22m&amp#27;[39m       &amp#27;[90m# com.jrobertgardzinski.email.policy.EmailPolicySteps.passwordResetIsRejectedWithViolation(java.lang.String)&amp#27;[39m
+]]></system-out>
+  </testcase>
+</testsuite>
