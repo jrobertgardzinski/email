@@ -7,11 +7,7 @@ import com.jrobertgardzinski.util.constraint.Constraint;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 import com.jrobertgardzinski.util.constraint.WarningConstraint;
 
-import com.jrobertgardzinski.email.domain.DomainPart;
-
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class CanRegister {
 
@@ -35,10 +31,6 @@ public class CanRegister {
         );
     }
 
-    private static Set<String> toStringSet(Set<DomainPart> domains) {
-        return domains.stream().map(DomainPart::value).collect(Collectors.toSet());
-    }
-
     public Decision evaluate(Email email) {
         List<String> codes = errorConstraints.stream()
                 .filter(el -> !el.isSatisfied(email))
@@ -57,13 +49,8 @@ public class CanRegister {
     }
 
     public interface Decision {
-        record Rejected(
-                List<String> errorCodes) implements Decision {
-        }
-
+        record Rejected(List<String> errorCodes) implements Decision {}
         record Allowed() implements Decision {}
-
         record AllowedWithWarning(String code) implements Decision {}
     }
-
 }

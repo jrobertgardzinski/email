@@ -14,5 +14,14 @@
             <groupId>com.jrobertgardzinski</groupId>
             <artifactId>email-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.jrobertgardzinski</groupId>
+            <artifactId>config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jrobertgardzinski</groupId>
+            <artifactId>bdd-test-starter</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
