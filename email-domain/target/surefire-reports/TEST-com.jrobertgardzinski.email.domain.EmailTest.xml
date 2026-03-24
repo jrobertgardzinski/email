@@ -12,7 +12,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/home/robert/.jdks/corretto-25.0.2/lib"/>
-    <property name="sun.java.command" value="/home/robert/Documents/git/portfolio/email/email-domain/target/surefire/surefirebooter-20260322231000912_3.jar /home/robert/Documents/git/portfolio/email/email-domain/target/surefire 2026-03-22T23-10-00_856-jvmRun1 surefire-20260322231000912_1tmp surefire_0-20260322231000912_2tmp"/>
+    <property name="sun.java.command" value="/home/robert/Documents/git/portfolio/email/email-domain/target/surefire/surefirebooter-20260324155908929_3.jar /home/robert/Documents/git/portfolio/email/email-domain/target/surefire 2026-03-24T15-59-08_862-jvmRun1 surefire-20260324155908929_1tmp surefire_0-20260324155908929_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/robert/Documents/git/portfolio/email/email-domain/target/test-classes:/home/robert/Documents/git/portfolio/email/email-domain/target/classes:/home/robert/.m2/repository/com/jrobertgardzinski/unit-test-starter/1.0.0/unit-test-starter-1.0.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter/5.14.0/junit-jupiter-5.14.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.14.0/junit-jupiter-api-5.14.0.jar:/home/robert/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-commons/1.14.0/junit-platform-commons-1.14.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.14.0/junit-jupiter-engine-5.14.0.jar:/home/robert/.m2/repository/org/junit/platform/junit-platform-engine/1.14.0/junit-platform-engine-1.14.0.jar:/home/robert/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.14.0/junit-jupiter-params-5.14.0.jar:/home/robert/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/robert/.m2/repository/org/mockito/mockito-core/5.14.2/mockito-core-5.14.2.jar:/home/robert/.m2/repository/net/bytebuddy/byte-buddy/1.15.4/byte-buddy-1.15.4.jar:/home/robert/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.4/byte-buddy-agent-1.15.4.jar:/home/robert/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/robert/.m2/repository/org/mockito/mockito-junit-jupiter/5.14.2/mockito-junit-jupiter-5.14.2.jar:/home/robert/.m2/repository/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,7 +28,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/home/robert/Documents/git/portfolio/email/email-domain/target/surefire/surefirebooter-20260322231000912_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/robert/Documents/git/portfolio/email/email-domain/target/surefire/surefirebooter-20260324155908929_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.2+10-LTS"/>
     <property name="user.name" value="robert"/>
@@ -61,10 +61,10 @@
     <property name="java.class.version" value="69.0"/>
   </properties>
   <testcase name="emptyLocalThrows" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.002"/>
-  <testcase name="blankThrows(String)[1]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
-  <testcase name="blankThrows(String)[2]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
+  <testcase name="blankThrows(String)[1]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.002"/>
+  <testcase name="blankThrows(String)[2]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.0"/>
   <testcase name="blankThrows(String)[3]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
-  <testcase name="domainNormalizesToLowercase" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.0"/>
+  <testcase name="domainNormalizesToLowercase" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
   <testcase name="domainWithoutDotThrows" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
   <testcase name="localPreservesCase" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
   <testcase name="valueIsDerived" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.002"/>
@@ -72,11 +72,11 @@
   <testcase name="missingAtThrows" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
   <testcase name="notEqualsDifferentLocal" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
   <testcase name="equalsSameAddress" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
-  <testcase name="equalsCaseInsensitiveDomain" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
+  <testcase name="equalsCaseInsensitiveDomain" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.0"/>
   <testcase name="multipleAtThrows" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
   <testcase name="validSucceeds(String)[1]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
-  <testcase name="validSucceeds(String)[2]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.0"/>
-  <testcase name="validSucceeds(String)[3]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
-  <testcase name="validSucceeds(String)[4]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
-  <testcase name="nullThrows" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
+  <testcase name="validSucceeds(String)[2]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.001"/>
+  <testcase name="validSucceeds(String)[3]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.0"/>
+  <testcase name="validSucceeds(String)[4]" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.0"/>
+  <testcase name="nullThrows" classname="com.jrobertgardzinski.email.domain.EmailTest" time="0.0"/>
 </testsuite>

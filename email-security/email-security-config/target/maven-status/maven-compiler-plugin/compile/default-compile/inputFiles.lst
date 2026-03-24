@@ -1,4 +1,5 @@
 /home/robert/Documents/git/portfolio/email/email-security/email-security-config/src/main/java/com/jrobertgardzinski/email/config/BlockedDomains.java
+/home/robert/Documents/git/portfolio/email/email-security/email-security-config/src/main/java/com/jrobertgardzinski/email/config/CanRegisterConfig.java
 /home/robert/Documents/git/portfolio/email/email-security/email-security-config/src/main/java/com/jrobertgardzinski/email/config/CompanyDomains.java
 /home/robert/Documents/git/portfolio/email/email-security/email-security-config/src/main/java/com/jrobertgardzinski/email/config/DisposableDomains.java
 /home/robert/Documents/git/portfolio/email/email-security/email-security-config/src/main/java/com/jrobertgardzinski/email/config/port/EmailConfigPort.java

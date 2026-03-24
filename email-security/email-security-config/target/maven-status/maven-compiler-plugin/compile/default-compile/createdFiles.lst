@@ -1,3 +1,4 @@
+com/jrobertgardzinski/email/config/CanRegisterConfig.class
 com/jrobertgardzinski/email/config/DisposableDomains.class
 com/jrobertgardzinski/email/config/port/EmailConfigPort.class
 com/jrobertgardzinski/email/config/CompanyDomains.class
