@@ -1,5 +1,0 @@
-com/jrobertgardzinski/email/domain/Email.class
-com/jrobertgardzinski/email/domain/DomainPart.class
-com/jrobertgardzinski/email/domain/LocalPart.class
-com/jrobertgardzinski/email/domain/_GmailNormalization.class
-com/jrobertgardzinski/email/domain/_EmailNormalization.class
