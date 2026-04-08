@@ -29,7 +29,13 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.5</version>
+                    <version>3.5.2</version>
+                    <configuration>
+                        <systemPropertyVariables>
+                            <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                            <jqwik.database>${project.build.directory}/.jqwik-database</jqwik.database>
+                        </systemPropertyVariables>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
