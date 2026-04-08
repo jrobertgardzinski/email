@@ -29,7 +29,7 @@
             </dependency>
             <dependency>
                 <groupId>com.jrobertgardzinski</groupId>
-                <artifactId>lib-util</artifactId>
+                <artifactId>constraint</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>

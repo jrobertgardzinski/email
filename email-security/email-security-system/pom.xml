@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.jrobertgardzinski</groupId>
-            <artifactId>lib-util</artifactId>
+            <artifactId>constraint</artifactId>
         </dependency>
         <dependency>
             <groupId>com.jrobertgardzinski</groupId>

@@ -1,4 +1,8 @@
 /.idea/
+target/
+.jqwik-database
+.allure/
+allure-results/
 
 # Compiled class file
 *.class
