@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.jrobertgardzinski</groupId>
         <artifactId>email</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>email-security</artifactId>
@@ -30,17 +30,17 @@
             <dependency>
                 <groupId>com.jrobertgardzinski</groupId>
                 <artifactId>constraint</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.jrobertgardzinski</groupId>
                 <artifactId>bdd-test-starter</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.jrobertgardzinski</groupId>
                 <artifactId>config</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
