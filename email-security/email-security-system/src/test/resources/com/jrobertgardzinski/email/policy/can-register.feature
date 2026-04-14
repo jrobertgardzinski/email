@@ -1,3 +1,4 @@
+@allure.label.epic:Email
 Feature: Registration eligibility
 
   CanRegister decides whether an email address may be used to create an account.

@@ -1,41 +1,55 @@
 package com.jrobertgardzinski.email.domain;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import net.jqwik.api.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@Epic("Domain")
+@Feature("DomainPart")
 class DomainPartTest {
 
-    @Test
-    void nullThrows() {
-        assertThrows(IllegalArgumentException.class, () -> DomainPart.of(null));
+    @Property
+    @Label("Invariant: rejects invalid input")
+    void rejectsInvalidInput(@ForAll("invalidInputs") Tuple.Tuple2<String, String> tc) {
+        Allure.parameter(tc.get1(), tc.get2());
+        assertThrows(IllegalArgumentException.class, () -> DomainPart.of(tc.get2()));
     }
 
-    @Test
-    void emptyThrows() {
-        assertThrows(IllegalArgumentException.class, () -> DomainPart.of(""));
+    @Property
+    @Label("Invariant: accepts valid values")
+    void acceptsValidValues(@ForAll("validValues") Tuple.Tuple2<String, String> tc) {
+        Allure.parameter(tc.get1(), tc.get2());
+        assertThatCode(() -> DomainPart.of(tc.get2())).doesNotThrowAnyException();
     }
 
-    @Test
-    void missingDotThrows() {
-        assertThrows(IllegalArgumentException.class, () -> DomainPart.of("localhost"));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"gmail.com", "home.pl", "mail.google.com", "booking.co.uk"})
-    void validSucceeds(String value) {
-        assertDoesNotThrow(() -> DomainPart.of(value));
-    }
-
-    @Test
+    @Example
+    @Label("Normalization: lowercases domain")
     void normalizesToLowercase() {
-        assertEquals("gmail.com", DomainPart.of("GMAIL.COM").value());
+        Allure.parameter("input", "GMAIL.COM");
+        assertThat(DomainPart.of("GMAIL.COM").value()).isEqualTo("gmail.com");
     }
 
-    @Test
-    void equalsCaseInsensitive() {
-        assertEquals(DomainPart.of("GMAIL.COM"), DomainPart.of("gmail.com"));
+    @Provide
+    Arbitrary<Tuple.Tuple2<String, String>> invalidInputs() {
+        return Arbitraries.of(
+                Tuple.of("null", (String) null),
+                Tuple.of("empty", ""),
+                Tuple.of("no dot", "localhost")
+        );
+    }
+
+    @Provide
+    Arbitrary<Tuple.Tuple2<String, String>> validValues() {
+        return Arbitraries.of(
+                Tuple.of("simple", "gmail.com"),
+                Tuple.of("Polish TLD", "home.pl"),
+                Tuple.of("subdomain", "mail.google.com"),
+                Tuple.of("compound TLD", "booking.co.uk")
+        );
     }
 }

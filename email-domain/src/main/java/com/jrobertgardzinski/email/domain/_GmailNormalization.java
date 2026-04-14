@@ -7,6 +7,6 @@ class _GmailNormalization implements _EmailNormalization {
         if (!domain.equals("gmail.com") && !domain.equals("googlemail.com")) {
             return localPart;
         }
-        return localPart.replaceAll("\\+.*", "").replace(".", "");
+        return localPart.toLowerCase().replaceAll("\\+.*", "").replace(".", "");
     }
 }

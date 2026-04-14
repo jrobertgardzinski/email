@@ -1,3 +1,4 @@
+@allure.label.epic:Email
 Feature: Repository-backed registration configuration
 
   CanRegisterConfig adapts three typed RepositoryConfigPorts into EmailConfigPort.
