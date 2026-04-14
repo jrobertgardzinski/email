@@ -1,10 +1,13 @@
 package com.jrobertgardzinski.email.policy;
 
 import com.jrobertgardzinski.email.domain.Email;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import net.jqwik.api.*;
+import net.jqwik.api.Example;
+import net.jqwik.api.Label;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,17 +17,25 @@ class RfcFormatConstraintRulesTest {
 
     private final _RfcFormatConstraint constraint = new _RfcFormatConstraint();
 
-    @Property(tries = 10)
-    @Label("any email failing RFC pattern is not satisfied")
-    void nonRfcEmailIsNotSatisfied(@ForAll("invalidRfcEmails") String raw) {
-        Allure.parameter("email", raw);
+    @DisplayName("rejects ")
+    @ParameterizedTest(name = "\"{0}\"")
+    @ValueSource(strings = {
+            "user test@example.com",
+            "user(comment)@example.com",
+            "user,extra@example.com"
+    })
+    void rejectsNonRfcEmail(String raw) {
         assertThat(constraint.isSatisfied(Email.of(raw))).isFalse();
     }
 
-    @Property(tries = 10)
-    @Label("any RFC-compliant email is satisfied")
-    void rfcCompliantEmailIsSatisfied(@ForAll("validRfcEmails") String raw) {
-        Allure.parameter("email", raw);
+    @DisplayName("accepts ")
+    @ParameterizedTest(name = "\"{0}\"")
+    @ValueSource(strings = {
+            "user@example.com",
+            "j.doe+alias@gmail.com",
+            "user123@home.pl"
+    })
+    void acceptsRfcCompliantEmail(String raw) {
         assertThat(constraint.isSatisfied(Email.of(raw))).isTrue();
     }
 
@@ -32,24 +43,5 @@ class RfcFormatConstraintRulesTest {
     @Label("error code is RFC_FORMAT_INVALID")
     void errorCode() {
         assertThat(constraint.code()).isEqualTo("RFC_FORMAT_INVALID");
-    }
-
-    @Provide
-    Arbitrary<String> invalidRfcEmails() {
-        // Pass Email.of() structural check, fail RFC local-part charset
-        return Arbitraries.of(
-                "user test@example.com",
-                "user(comment)@example.com",
-                "user,extra@example.com"
-        );
-    }
-
-    @Provide
-    Arbitrary<String> validRfcEmails() {
-        return Arbitraries.of(
-                "user@example.com",
-                "j.doe+alias@gmail.com",
-                "user123@home.pl"
-        );
     }
 }

@@ -2,10 +2,13 @@ package com.jrobertgardzinski.email.policy;
 
 import com.jrobertgardzinski.email.domain.DomainPart;
 import com.jrobertgardzinski.email.domain.Email;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import net.jqwik.api.*;
+import net.jqwik.api.Example;
+import net.jqwik.api.Label;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Set;
 
@@ -15,39 +18,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Feature("Disposable email")
 class DisposableEmailConstraintRulesTest {
 
-    private static final Set<DomainPart> DISPOSABLE = Set.of(
-            DomainPart.of("mailinator.com"),
-            DomainPart.of("guerrillamail.com")
-    );
-    private final _DisposableEmailConstraint constraint = new _DisposableEmailConstraint(DISPOSABLE);
-
-    @Property(tries = 10)
-    @Label("email from disposable domain is not satisfied")
-    void disposableDomainIsNotSatisfied(@ForAll("disposableEmails") String raw) {
-        Allure.parameter("email", raw);
-        assertThat(constraint.isSatisfied(Email.of(raw))).isFalse();
+    @DisplayName("rejects ")
+    @ParameterizedTest(name = "\"{0}\" (domain \"{1}\" is disposable)")
+    @CsvSource({
+            "user@mailinator.com,     mailinator.com",
+            "temp@guerrillamail.com,  guerrillamail.com"
+    })
+    void rejectsDisposableEmail(String email, String disposableDomain) {
+        _DisposableEmailConstraint constraint = new _DisposableEmailConstraint(Set.of(DomainPart.of(disposableDomain.trim())));
+        assertThat(constraint.isSatisfied(Email.of(email.trim()))).isFalse();
     }
 
-    @Property(tries = 10)
-    @Label("email from non-disposable domain is satisfied")
-    void nonDisposableDomainIsSatisfied(@ForAll("regularEmails") String raw) {
-        Allure.parameter("email", raw);
-        assertThat(constraint.isSatisfied(Email.of(raw))).isTrue();
+    @DisplayName("accepts ")
+    @ParameterizedTest(name = "\"{0}\" (domain not disposable)")
+    @CsvSource({
+            "user@example.com, mailinator.com",
+            "user@gmail.com,   guerrillamail.com"
+    })
+    void acceptsNonDisposableEmail(String email, String disposableDomain) {
+        _DisposableEmailConstraint constraint = new _DisposableEmailConstraint(Set.of(DomainPart.of(disposableDomain.trim())));
+        assertThat(constraint.isSatisfied(Email.of(email.trim()))).isTrue();
     }
 
     @Example
     @Label("error code is DISPOSABLE_DOMAIN")
     void errorCode() {
-        assertThat(constraint.code()).isEqualTo("DISPOSABLE_DOMAIN");
-    }
-
-    @Provide
-    Arbitrary<String> disposableEmails() {
-        return Arbitraries.of("user@mailinator.com", "temp@guerrillamail.com");
-    }
-
-    @Provide
-    Arbitrary<String> regularEmails() {
-        return Arbitraries.of("user@example.com", "user@gmail.com");
+        assertThat(new _DisposableEmailConstraint(Set.of()).code()).isEqualTo("DISPOSABLE_DOMAIN");
     }
 }
