@@ -1,8 +1,6 @@
 package com.jrobertgardzinski.email.domain;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Email value object.
@@ -11,22 +9,18 @@ import java.util.Optional;
  * - not blank
  * - exactly one '@' separating a non-empty local part from a non-empty domain
  * <p>
- * Business rules (RFC compliance, Gmail alias normalisation, domain blacklists,
- * disposable-address detection) live in the domain constraints.
- * System decisions (can register, is employee) live in domain policies.
+ * Domain part is always stored lowercase (see DomainPart).
+ * Local part preserves original case — RFC 5321 treats it as case-sensitive.
+ * <p>
+ * TODO: provider-specific normalization (Gmail dots/aliases, Yahoo suffix stripping, etc.)
  */
 public final class Email {
 
-    private static final List<_EmailNormalization>
-            DEFAULT_NORMALIZATION_POLICIES = List.of(new _GmailNormalization());
-
     private final LocalPart local;
-    private final Optional<LocalPart> normalized;
     private final DomainPart domain;
 
-    Email(LocalPart local, Optional<LocalPart> normalized, DomainPart domain) {
+    Email(LocalPart local, DomainPart domain) {
         this.local = local;
-        this.normalized = normalized;
         this.domain = domain;
     }
 
@@ -43,23 +37,11 @@ public final class Email {
         LocalPart local = LocalPart.of(raw.substring(0, atIndex));
         DomainPart domain = DomainPart.of(raw.substring(atIndex + 1));
 
-        String normalizedRaw = local.value();
-        for (_EmailNormalization policy : DEFAULT_NORMALIZATION_POLICIES) {
-            normalizedRaw = policy.normalize(normalizedRaw, domain.value());
-        }
-        Optional<LocalPart> normalized = Objects.equals(normalizedRaw, local.value()) ?
-                Optional.empty() :
-                Optional.of(LocalPart.of(normalizedRaw));
-
-        return new Email(local, normalized, domain);
+        return new Email(local, domain);
     }
 
     public LocalPart local() {
         return local;
-    }
-
-    public Optional<LocalPart> normalized() {
-        return normalized;
     }
 
     public DomainPart domain() {
@@ -68,10 +50,6 @@ public final class Email {
 
     public String value() {
         return local + "@" + domain;
-    }
-
-    public String normalizedValue() {
-        return normalized.orElse(local) + "@" + domain;
     }
 
     @Override

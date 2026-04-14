@@ -41,9 +41,9 @@ public class EmailPolicySteps {
     @Given("{string} is a {string} domain")
     public void isATypedDomain(String domain, String type) {
         switch (type) {
-            case "disposable"   -> disposableDomains.add(new DomainPart(domain));
-            case "blacklisted"  -> blockedDomains.add(new DomainPart(domain));
-            case "company-only" -> companyDomains.add(new DomainPart(domain));
+            case "disposable"   -> disposableDomains.add(DomainPart.of(domain));
+            case "blacklisted"  -> blockedDomains.add(DomainPart.of(domain));
+            case "company-only" -> companyDomains.add(DomainPart.of(domain));
             default -> throw new IllegalArgumentException("Unknown domain type: " + type);
         }
     }

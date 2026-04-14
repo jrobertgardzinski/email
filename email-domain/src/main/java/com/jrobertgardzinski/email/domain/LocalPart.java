@@ -23,6 +23,22 @@ public final class LocalPart {
 
     public String value() { return value; }
 
+    public LocalPart normalize(String domain) {
+        if (domain.equals("gmail.com") || domain.equals("googlemail.com")) {
+            return new LocalPart(value.toLowerCase().replaceAll("\\+.*", "").replace(".", ""));
+        }
+        if (domain.startsWith("yahoo.")) {
+            return new LocalPart(value.toLowerCase().replaceAll("-.*", ""));
+        }
+        if (domain.equals("outlook.com") || domain.equals("hotmail.com") || domain.equals("live.com")) {
+            return new LocalPart(value.toLowerCase().replaceAll("\\+.*", ""));
+        }
+        if (domain.equals("icloud.com") || domain.equals("me.com") || domain.equals("mac.com")) {
+            return new LocalPart(value.toLowerCase());
+        }
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

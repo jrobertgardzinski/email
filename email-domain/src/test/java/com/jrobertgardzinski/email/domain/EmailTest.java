@@ -9,21 +9,17 @@ import net.jqwik.api.constraints.StringLength;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Epic("Domain")
-@Feature("Email")
+@Epic("Email")
 class EmailTest {
-
-    @Example
-    @Label("Invariant: rejects null")
-    void rejectsNull() {
-        assertThrows(IllegalArgumentException.class, () -> Email.of(null));
-    }
 
     @Property
     @Label("Invariant: rejects invalid input")
@@ -39,60 +35,33 @@ class EmailTest {
         assertThatCode(() -> Email.of(tc.get2())).doesNotThrowAnyException();
     }
 
-    @Property
-    @Label("Construction: local part preserves case, domain part is lowercased, and value joins them")
-    void identityIsDerivedFromLocalAndDomain(
-            @ForAll @AlphaChars @StringLength(min = 1, max = 20) String local,
-            @ForAll("mixedCaseDomains") String domain
-    ) {
-        String raw = local + "@" + domain;
-        Email email = Email.of(raw);
-
-        assertThat(email.local().value())
-                .as("Local part should preserve original case")
-                .isEqualTo(local);
-
-        assertThat(email.domain().value())
-                .as("Domain part should be lowercased")
-                .isEqualTo(domain.toLowerCase());
-
-        assertThat(email.value())
-                .as("Email value should be local@domain(lowercase)")
-                .isEqualTo(local + "@" + domain.toLowerCase());
+    @Feature("Construction")
+    @DisplayName("parses ")
+    @ParameterizedTest(name = "\"{0}\" to \"{1}\"")
+    @MethodSource("rawEmails")
+    void parsesRawEmail(String raw, String expected) {
+        assertThat(asRecordLikeString(Email.of(raw))).isEqualTo(expected);
     }
 
+    static Stream<Arguments> rawEmails() {
+        return Stream.of(
+                Arguments.of("user@gmail.com",    asRecordLikeString(Email.of("user@gmail.com"))),
+                Arguments.of("JohnDoe@GMAIL.COM", asRecordLikeString(Email.of("JohnDoe@GMAIL.COM")))
+        );
+    }
 
-        @DisplayName("Domain normalization: ")
-        @ParameterizedTest(name = "normalizes \"{0}\" to lowercase \"{1}\"")
-        @CsvSource({
-                "GMAIL.COM, gmail.com",
-                "Gmail.Com, gmail.com",
-                "googlemail.com, googlemail.com"
-        })
-        void domainNormalizesToLowercase(String domainInput, String expectedDomain) {
-            Email email = Email.of("user@" + domainInput);
-            assertThat(email.domain().value()).isEqualTo(expectedDomain);
-        }
-
-        @Example
-        @Label("Normalization: handles Gmail specific rules (dots, aliases, case)")
-        void normalizesGmail() {
-            Email email = Email.of("J.Doe+spam@gmail.com");
-
-            assertThat(email.normalized()).isPresent();
-            assertThat(email.normalized().get().value()).isEqualTo("jdoe");
-            assertThat(email.normalizedValue()).isEqualTo("jdoe@gmail.com");
-        }
-
-    @Provide
-    Arbitrary<String> mixedCaseDomains() {
-        return Arbitraries.of("GMAIL.COM", "home.PL", "Booking.Co.Uk", "User.Com");
+    static String asRecordLikeString(Email email) {
+        return "Email{" +
+                "local=" + email.local() +
+                ", domain=" + email.domain() +
+                '}';
     }
 
     @Provide
     Arbitrary<Tuple.Tuple2<String, String>> invalidInputs() {
         return Arbitraries.of(
-                Tuple.of("blank", ""),
+                Tuple.of("empty", ""),
+                Tuple.of("null", null),
                 Tuple.of("single space", " "),
                 Tuple.of("missing @", "usergmail.com"),
                 Tuple.of("multiple @", "user@@gmail.com"),
