@@ -5,45 +5,39 @@ import com.jrobertgardzinski.config.source.repository.RepositoryConfigPort;
 import com.jrobertgardzinski.config.source.repository.RepositoryConfigSource;
 import com.jrobertgardzinski.email.config.port.EmailConfigPort;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
-public class CanRegisterConfig implements EmailConfigPort {
+public record CanRegisterConfig(
+        BlockedDomains blockedDomains,
+        DisposableDomains disposableDomains,
+        CompanyDomains companyDomains) implements EmailConfigPort {
 
-    private static final RepositoryKey<BlockedDomains>    BLOCKED_DOMAINS    = new RepositoryKey<>("blocked-domains");
-    private static final RepositoryKey<DisposableDomains> DISPOSABLE_DOMAINS = new RepositoryKey<>("disposable-domains");
-    private static final RepositoryKey<CompanyDomains>    COMPANY_DOMAINS    = new RepositoryKey<>("company-domains");
+    public CanRegisterConfig {
+        List<String> errors = new LinkedList<>();
 
-    private final RepositoryConfigPort<BlockedDomains>    blockedPort;
-    private final RepositoryConfigPort<DisposableDomains> disposablePort;
-    private final RepositoryConfigPort<CompanyDomains>    companyPort;
+        if (blockedDomains == null) {
+            errors.add("blockedDomains cannot be null!");
+        }
+        if (disposableDomains == null) {
+            errors.add("disposableDomains cannot be null!");
+        }
+        if (companyDomains == null) {
+            errors.add("companyDomains cannot be null!");
+        }
 
-    public CanRegisterConfig(
-            RepositoryConfigPort<BlockedDomains>    blockedPort,
-            RepositoryConfigPort<DisposableDomains> disposablePort,
-            RepositoryConfigPort<CompanyDomains>    companyPort) {
-        this.blockedPort    = blockedPort;
-        this.disposablePort = disposablePort;
-        this.companyPort    = companyPort;
+        if (!errors.isEmpty()) {
+            throw new IllegalArgumentException(errors.toString());
+        }
     }
 
-    @Override
-    public BlockedDomains blockedDomains() {
-        return new RepositoryConfigSource<>(blockedPort)
-                .resolve(BLOCKED_DOMAINS)
-                .orElse(new BlockedDomains(Set.of()));
-    }
-
-    @Override
-    public DisposableDomains disposableDomains() {
-        return new RepositoryConfigSource<>(disposablePort)
-                .resolve(DISPOSABLE_DOMAINS)
-                .orElse(new DisposableDomains(Set.of()));
-    }
-
-    @Override
-    public CompanyDomains companyDomains() {
-        return new RepositoryConfigSource<>(companyPort)
-                .resolve(COMPANY_DOMAINS)
-                .orElse(new CompanyDomains(Set.of()));
+    public CanRegisterConfig() {
+        this(
+                new BlockedDomains(Collections.emptySet()),
+                new DisposableDomains(Collections.emptySet()),
+                new CompanyDomains(Collections.emptySet())
+        );
     }
 }
