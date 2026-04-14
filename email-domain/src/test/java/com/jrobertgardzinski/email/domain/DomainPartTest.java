@@ -4,13 +4,15 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import net.jqwik.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Epic("Domain")
-@Feature("DomainPart")
+@Epic("DomainPart")
 class DomainPartTest {
 
     @Property
@@ -27,11 +29,18 @@ class DomainPartTest {
         assertThatCode(() -> DomainPart.of(tc.get2())).doesNotThrowAnyException();
     }
 
-    @Example
-    @Label("Normalization: lowercases domain")
-    void normalizesToLowercase() {
-        Allure.parameter("input", "GMAIL.COM");
-        assertThat(DomainPart.of("GMAIL.COM").value()).isEqualTo("gmail.com");
+    @Feature("Domain normalization")
+    @DisplayName("normalizes ")
+    @ParameterizedTest(name = "\"{0}\" to lowercase \"{1}\"")
+    @CsvSource({
+            "GMAIL.COM,       gmail.com",
+            "Gmail.Com,       gmail.com",
+            "googlemail.com,  googlemail.com",
+            "HOME.PL,         home.pl",
+            "Booking.Co.Uk,   booking.co.uk"
+    })
+    void normalizesToLowercase(String input, String expected) {
+        assertThat(DomainPart.of(input.trim()).value()).isEqualTo(expected.trim());
     }
 
     @Provide
