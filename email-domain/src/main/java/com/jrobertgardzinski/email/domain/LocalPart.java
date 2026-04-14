@@ -15,6 +15,9 @@ public final class LocalPart {
         if (value == null || value.isEmpty()) {
             throw new IllegalArgumentException("Email local part must not be empty");
         }
+        if (value.startsWith(".") || value.endsWith(".")) {
+            throw new IllegalArgumentException("Email local part must not start or end with a dot: " + value);
+        }
         return new LocalPart(value);
     }
 

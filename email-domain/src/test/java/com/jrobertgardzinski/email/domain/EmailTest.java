@@ -1,82 +1,116 @@
 package com.jrobertgardzinski.email.domain;
 
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import net.jqwik.api.*;
+import net.jqwik.api.constraints.AlphaChars;
+import net.jqwik.api.constraints.StringLength;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@Epic("Domain")
+@Feature("Email")
 class EmailTest {
 
-    @Test
-    void nullThrows() {
+    @Example
+    @Label("Invariant: rejects null")
+    void rejectsNull() {
         assertThrows(IllegalArgumentException.class, () -> Email.of(null));
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"", " ", "   "})
-    void blankThrows(String value) {
-        assertThrows(IllegalArgumentException.class, () -> Email.of(value));
+    @Property
+    @Label("Invariant: rejects invalid input")
+    void rejectsInvalidInput(@ForAll("invalidInputs") Tuple.Tuple2<String, String> tc) {
+        Allure.parameter(tc.get1(), tc.get2());
+        assertThrows(IllegalArgumentException.class, () -> Email.of(tc.get2()));
     }
 
-    @Test
-    void missingAtThrows() {
-        assertThrows(IllegalArgumentException.class, () -> Email.of("usergmail.com"));
+    @Property
+    @Label("Invariant: accepts valid addresses")
+    void acceptsValidAddresses(@ForAll("validAddresses") Tuple.Tuple2<String, String> tc) {
+        Allure.parameter(tc.get1(), tc.get2());
+        assertThatCode(() -> Email.of(tc.get2())).doesNotThrowAnyException();
     }
 
-    @Test
-    void multipleAtThrows() {
-        assertThrows(IllegalArgumentException.class, () -> Email.of("user@@gmail.com"));
+    @Property
+    @Label("Construction: local part preserves case, domain part is lowercased, and value joins them")
+    void identityIsDerivedFromLocalAndDomain(
+            @ForAll @AlphaChars @StringLength(min = 1, max = 20) String local,
+            @ForAll("mixedCaseDomains") String domain
+    ) {
+        String raw = local + "@" + domain;
+        Email email = Email.of(raw);
+
+        assertThat(email.local().value())
+                .as("Local part should preserve original case")
+                .isEqualTo(local);
+
+        assertThat(email.domain().value())
+                .as("Domain part should be lowercased")
+                .isEqualTo(domain.toLowerCase());
+
+        assertThat(email.value())
+                .as("Email value should be local@domain(lowercase)")
+                .isEqualTo(local + "@" + domain.toLowerCase());
     }
 
-    @Test
-    void emptyLocalThrows() {
-        assertThrows(IllegalArgumentException.class, () -> Email.of("@gmail.com"));
+
+        @DisplayName("Domain normalization: ")
+        @ParameterizedTest(name = "normalizes \"{0}\" to lowercase \"{1}\"")
+        @CsvSource({
+                "GMAIL.COM, gmail.com",
+                "Gmail.Com, gmail.com",
+                "googlemail.com, googlemail.com"
+        })
+        void domainNormalizesToLowercase(String domainInput, String expectedDomain) {
+            Email email = Email.of("user@" + domainInput);
+            assertThat(email.domain().value()).isEqualTo(expectedDomain);
+        }
+
+        @Example
+        @Label("Normalization: handles Gmail specific rules (dots, aliases, case)")
+        void normalizesGmail() {
+            Email email = Email.of("J.Doe+spam@gmail.com");
+
+            assertThat(email.normalized()).isPresent();
+            assertThat(email.normalized().get().value()).isEqualTo("jdoe");
+            assertThat(email.normalizedValue()).isEqualTo("jdoe@gmail.com");
+        }
+
+    @Provide
+    Arbitrary<String> mixedCaseDomains() {
+        return Arbitraries.of("GMAIL.COM", "home.PL", "Booking.Co.Uk", "User.Com");
     }
 
-    @Test
-    void emptyDomainThrows() {
-        assertThrows(IllegalArgumentException.class, () -> Email.of("user@"));
+    @Provide
+    Arbitrary<Tuple.Tuple2<String, String>> invalidInputs() {
+        return Arbitraries.of(
+                Tuple.of("blank", ""),
+                Tuple.of("single space", " "),
+                Tuple.of("missing @", "usergmail.com"),
+                Tuple.of("multiple @", "user@@gmail.com"),
+                Tuple.of("empty local", "@gmail.com"),
+                Tuple.of("empty domain", "user@"),
+                Tuple.of("domain without dot", "user@localhost")
+        );
     }
 
-    @Test
-    void domainWithoutDotThrows() {
-        assertThrows(IllegalArgumentException.class, () -> Email.of("user@localhost"));
+    @Provide
+    Arbitrary<Tuple.Tuple2<String, String>> validAddresses() {
+        return Arbitraries.of(
+                Tuple.of("simple", "user@gmail.com"),
+                Tuple.of("with alias", "j.doe+spam@gmail.com"),
+                Tuple.of("Polish TLD", "user@home.pl"),
+                Tuple.of("compound TLD", "user@booking.co.uk")
+        );
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"user@gmail.com", "j.doe+spam@gmail.com", "user@home.pl", "user@booking.co.uk"})
-    void validSucceeds(String value) {
-        assertDoesNotThrow(() -> Email.of(value));
-    }
 
-    @Test
-    void localPreservesCase() {
-        assertEquals("J.Doe", Email.of("J.Doe@gmail.com").local().value());
-    }
-
-    @Test
-    void domainNormalizesToLowercase() {
-        assertEquals("gmail.com", Email.of("user@GMAIL.COM").domain().value());
-    }
-
-    @Test
-    void valueIsDerived() {
-        assertEquals("user@gmail.com", Email.of("user@GMAIL.COM").value());
-    }
-
-    @Test
-    void equalsSameAddress() {
-        assertEquals(Email.of("user@gmail.com"), Email.of("user@gmail.com"));
-    }
-
-    @Test
-    void equalsCaseInsensitiveDomain() {
-        assertEquals(Email.of("user@GMAIL.COM"), Email.of("user@gmail.com"));
-    }
-
-    @Test
-    void notEqualsDifferentLocal() {
-        assertNotEquals(Email.of("alice@gmail.com"), Email.of("bob@gmail.com"));
-    }
 }

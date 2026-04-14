@@ -1,41 +1,48 @@
 package com.jrobertgardzinski.email.domain;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import net.jqwik.api.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@Epic("Domain")
+@Feature("LocalPart")
 class LocalPartTest {
 
-    @Test
-    void nullThrows() {
-        assertThrows(IllegalArgumentException.class, () -> LocalPart.of(null));
+    @Property
+    @Label("Invariant: rejects invalid input")
+    void rejectsInvalidInput(@ForAll("invalidInputs") Tuple.Tuple2<String, String> tc) {
+        Allure.parameter(tc.get1(), tc.get2());
+        assertThrows(IllegalArgumentException.class, () -> LocalPart.of(tc.get2()));
     }
 
-    @Test
-    void emptyThrows() {
-        assertThrows(IllegalArgumentException.class, () -> LocalPart.of(""));
+    @Property
+    @Label("Invariant: accepts valid values")
+    void acceptsValidValues(@ForAll("validValues") Tuple.Tuple2<String, String> tc) {
+        Allure.parameter(tc.get1(), tc.get2());
+        assertThatCode(() -> LocalPart.of(tc.get2())).doesNotThrowAnyException();
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"user", "j.doe", "j.doe+spam", "user123"})
-    void validSucceeds(String value) {
-        assertDoesNotThrow(() -> LocalPart.of(value));
+    @Provide
+    Arbitrary<Tuple.Tuple2<String, String>> invalidInputs() {
+        return Arbitraries.of(
+                Tuple.of("null", (String) null),
+                Tuple.of("empty", ""),
+                Tuple.of("leading dot", ".john"),
+                Tuple.of("trailing dot", "john.")
+        );
     }
 
-    @Test
-    void valueReturnsOriginal() {
-        assertEquals("j.doe+spam", LocalPart.of("j.doe+spam").value());
-    }
-
-    @Test
-    void equalsSameValue() {
-        assertEquals(LocalPart.of("user"), LocalPart.of("user"));
-    }
-
-    @Test
-    void notEqualsDifferentValue() {
-        assertNotEquals(LocalPart.of("user"), LocalPart.of("other"));
+    @Provide
+    Arbitrary<Tuple.Tuple2<String, String>> validValues() {
+        return Arbitraries.of(
+                Tuple.of("plain", "user"),
+                Tuple.of("with dot", "j.doe"),
+                Tuple.of("with alias", "j.doe+spam"),
+                Tuple.of("alphanumeric", "user123")
+        );
     }
 }

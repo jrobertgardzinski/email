@@ -70,6 +70,10 @@ public final class Email {
         return local + "@" + domain;
     }
 
+    public String normalizedValue() {
+        return normalized.orElse(local) + "@" + domain;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

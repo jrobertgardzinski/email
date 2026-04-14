@@ -1,3 +1,4 @@
+@allure.label.epic:Email
 Feature: Password reset eligibility
 
   Scenario: Valid email can request a password reset
