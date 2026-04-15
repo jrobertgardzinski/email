@@ -14,7 +14,7 @@ class CanRegisterConfigTest {
     private static final List<String> FIELD_NAMES = List.of("blockedDomains", "disposableDomains", "companyDomains");
 
     @Example
-    @Label("default config → all domain sets empty")
+    @Label("default config → all domain sets are empty")
     void defaultConfig() {
         CanRegisterConfig config = new CanRegisterConfig();
         Allure.parameter("default", config);
