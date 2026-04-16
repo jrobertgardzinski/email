@@ -1,11 +1,9 @@
 package com.jrobertgardzinski.email.domain;
 
-import java.util.Objects;
-
 /**
  * An email address, composed of a {@link LocalPart} and a {@link DomainPart}.
  */
-public final class Email {
+public final class Email extends AbstractEmail {
 
     private final LocalPart local;
     private final DomainPart domain;
@@ -43,21 +41,5 @@ public final class Email {
         return local + "@" + domain;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Email)) return false;
-        Email other = (Email) o;
-        return local.equals(other.local) && domain.equals(other.domain);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(local, domain);
-    }
-
-    @Override
-    public String toString() {
-        return value();
-    }
 }
