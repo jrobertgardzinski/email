@@ -2,7 +2,7 @@ package com.jrobertgardzinski.email.domain;
 
 import java.util.Objects;
 
-/** The local part of an email address — everything before '@'. */
+/** The recipient-specific portion of an {@link Email}, preceding the '@' symbol. */
 public final class LocalPart {
 
     private final String value;

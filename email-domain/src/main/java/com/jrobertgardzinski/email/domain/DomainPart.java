@@ -3,10 +3,7 @@ package com.jrobertgardzinski.email.domain;
 import java.util.Objects;
 
 /**
- * The domain part of an email address — everything after '@', always lowercase.
- *
- * Enforces only structural invariants: non-empty, contains at least one '.'.
- * Public suffix awareness (co.uk, com.pl) belongs in email-specifications.
+ * The mail server portion of an {@link Email}, following the '@' symbol.
  */
 public final class DomainPart {
 

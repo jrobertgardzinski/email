@@ -3,16 +3,7 @@ package com.jrobertgardzinski.email.domain;
 import java.util.Objects;
 
 /**
- * Email value object.
- * <p>
- * Enforces only structural (syntactic) invariants:
- * - not blank
- * - exactly one '@' separating a non-empty local part from a non-empty domain
- * <p>
- * Domain part is always stored lowercase (see DomainPart).
- * Local part preserves original case — RFC 5321 treats it as case-sensitive.
- * <p>
- * TODO: provider-specific normalization (Gmail dots/aliases, Yahoo suffix stripping, etc.)
+ * An email address, composed of a {@link LocalPart} and a {@link DomainPart}.
  */
 public final class Email {
 
