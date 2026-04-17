@@ -31,7 +31,7 @@ class DomainPartTest {
 
     @Feature("Domain normalization")
     @DisplayName("normalizes ")
-    @ParameterizedTest(name = "\"{0}\" to lowercase \"{1}\"")
+    @ParameterizedTest(name = "\"{0}\" to lowercase \"{1}\" by default")
     @CsvSource({
             "GMAIL.COM,       gmail.com",
             "Gmail.Com,       gmail.com",
@@ -39,7 +39,7 @@ class DomainPartTest {
             "HOME.PL,         home.pl",
             "Booking.Co.Uk,   booking.co.uk"
     })
-    void normalizesToLowercase(String input, String expected) {
+    void normalizesToLowercaseByDefault(String input, String expected) {
         assertThat(DomainPart.of(input.trim()).value()).isEqualTo(expected.trim());
     }
 

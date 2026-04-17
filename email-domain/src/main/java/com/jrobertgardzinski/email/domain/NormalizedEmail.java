@@ -19,10 +19,6 @@ public final class NormalizedEmail extends AbstractEmail {
         return new NormalizedEmail(local, domain);
     }
 
-    public static java.util.Optional<NormalizedEmail> optionalOf(Email email) {
-        return java.util.Optional.of(of(email)).filter(n -> !n.equals(email));
-    }
-
     public LocalPart local() {
         return local;
     }
