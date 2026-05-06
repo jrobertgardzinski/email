@@ -3,29 +3,31 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.jrobertgardzinski</groupId>
     <artifactId>email</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.release>25</maven.compiler.release>
+    </properties>
 
     <modules>
         <module>email-domain</module>
         <module>email-security</module>
     </modules>
 
-    <properties>
-        <maven.compiler.release>25</maven.compiler.release>
-    </properties>
-
+<!--Intentional DRY breakage-->
     <build>
         <pluginManagement>
             <plugins>
+<!-- pin plugin version for build reproducibility; 3.13.0+ supports release=25 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.13.0</version>
                 </plugin>
+<!-- redirect Allure results and jqwik failure cache under target/ so mvn clean removes them -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -39,29 +41,13 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>2.12.0</version>
-            </plugin>
-        </plugins>
     </build>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.jrobertgardzinski</groupId>
-                <artifactId>unit-test-starter</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
             <groupId>com.jrobertgardzinski</groupId>
             <artifactId>unit-test-starter</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
