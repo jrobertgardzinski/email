@@ -23,6 +23,7 @@ public final class LocalPart {
 
     public String value() { return value; }
 
+    // todo should be DomainPart instead of String domain!
     public LocalPart normalize(String domain) {
         if (domain.equals("gmail.com") || domain.equals("googlemail.com")) {
             return new LocalPart(value.toLowerCase().replaceAll("\\+.*", "").replace(".", ""));
