@@ -8,6 +8,7 @@ import java.util.Set;
 
 class _IsEmployeeConstraint extends ErrorConstraint<Email> {
 
+    static final String CODE = "NOT_A_COMPANY_DOMAIN";
     private final Set<DomainPart> companyDomains;
 
     _IsEmployeeConstraint(Set<DomainPart> companyDomains) {
@@ -21,6 +22,6 @@ class _IsEmployeeConstraint extends ErrorConstraint<Email> {
 
     @Override
     public String code() {
-        return "NOT_A_COMPANY_DOMAIN";
+        return CODE;
     }
 }

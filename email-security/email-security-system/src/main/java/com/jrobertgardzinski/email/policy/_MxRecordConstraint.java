@@ -6,6 +6,7 @@ import com.jrobertgardzinski.util.constraint.WarningConstraint;
 
 class _MxRecordConstraint extends WarningConstraint<Email> {
 
+    static final String CODE = "NO_MX_RECORD";
     private final MxRecordPort mxRecordPort;
 
     _MxRecordConstraint(MxRecordPort mxRecordPort) {
@@ -19,6 +20,6 @@ class _MxRecordConstraint extends WarningConstraint<Email> {
 
     @Override
     public String code() {
-        return "NO_MX_RECORD";
+        return CODE;
     }
 }

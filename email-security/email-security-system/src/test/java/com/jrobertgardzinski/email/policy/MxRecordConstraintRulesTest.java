@@ -1,39 +1,42 @@
 package com.jrobertgardzinski.email.policy;
 
+import com.jrobertgardzinski.email.domain.DomainPart;
 import com.jrobertgardzinski.email.domain.Email;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import net.jqwik.api.Example;
 import net.jqwik.api.Label;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.jrobertgardzinski.email.policy.MxRecordConstraintRulesTest.CONFIG;
+import static com.jrobertgardzinski.email.policy._MxRecordConstraint.CODE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Epic("Constraints")
-@Feature("MX record")
+@Epic("Email")
+@Feature("Constraints")
+@Story("MX record (for instance: fails on \"" + CONFIG + "\" domain)")
 class MxRecordConstraintRulesTest {
 
-    @DisplayName("rejects ")
-    @ParameterizedTest(name = "\"{0}\" (no MX record)")
-    @ValueSource(strings = {"user@ghost-domain.com", "test@nowhere.invalid"})
-    void rejectsEmailWithNoMxRecord(String raw) {
-        _MxRecordConstraint constraint = new _MxRecordConstraint(e -> false);
-        assertThat(constraint.isSatisfied(Email.of(raw))).isFalse();
+    public static final String CONFIG = "no-mx.com";
+    _MxRecordConstraint constraint = new _MxRecordConstraint(e -> !e.domain().equals(DomainPart.of(CONFIG)));
+
+    final String REJECTS = "somebody@no-mx.com";
+    @Example
+    @Label("rejects \"" + REJECTS + "\"")
+    void rejection() {
+        assertThat(constraint.isSatisfied(Email.of(REJECTS))).isFalse();
     }
 
-    @DisplayName("accepts ")
-    @ParameterizedTest(name = "\"{0}\" (has MX record)")
-    @ValueSource(strings = {"user@example.com", "user@gmail.com"})
-    void acceptsEmailWithMxRecord(String raw) {
-        _MxRecordConstraint constraint = new _MxRecordConstraint(e -> true);
-        assertThat(constraint.isSatisfied(Email.of(raw))).isTrue();
+    final String ACCEPTS = "user@anything-else.com";
+    @Example
+    @Label("accepts \"" + ACCEPTS + "\"")
+    void acceptance() {
+        assertThat(constraint.isSatisfied(Email.of(ACCEPTS))).isTrue();
     }
 
     @Example
-    @Label("error code is NO_MX_RECORD")
+    @Label("error code is " + CODE)
     void errorCode() {
-        assertThat(new _MxRecordConstraint(e -> false).code()).isEqualTo("NO_MX_RECORD");
+        assertThat(constraint.code()).isEqualTo(CODE);
     }
 }

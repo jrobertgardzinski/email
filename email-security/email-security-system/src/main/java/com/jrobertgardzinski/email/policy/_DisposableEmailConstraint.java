@@ -8,6 +8,7 @@ import java.util.Set;
 
 class _DisposableEmailConstraint extends ErrorConstraint<Email> {
 
+    static final String CODE = "DISPOSABLE_DOMAIN";
     private final Set<DomainPart> disposableDomains;
 
     _DisposableEmailConstraint(Set<DomainPart> disposableDomains) {
@@ -21,6 +22,6 @@ class _DisposableEmailConstraint extends ErrorConstraint<Email> {
 
     @Override
     public String code() {
-        return "DISPOSABLE_DOMAIN";
+        return CODE;
     }
 }
