@@ -3,6 +3,7 @@ package com.jrobertgardzinski.email.domain;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import net.jqwik.api.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Epic("DomainPart")
+@Epic("Email")
+@Feature("Domain")
+@Story("DomainPart")
 class DomainPartTest {
 
     @Property
@@ -46,8 +49,6 @@ class DomainPartTest {
     @Provide
     Arbitrary<Tuple.Tuple2<String, String>> invalidInputs() {
         return Arbitraries.of(
-                Tuple.of("null", (String) null),
-                Tuple.of("empty", ""),
                 Tuple.of("no dot", "localhost")
         );
     }

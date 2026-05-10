@@ -5,6 +5,7 @@ import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import net.jqwik.api.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,8 +19,9 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Epic("Use case")
-@Feature("Can Reset Password")
+@Epic("Email")
+@Feature("Use case")
+@Story("CanResetPassword")
 class CanResetPasswordRulesTest {
 
     private static final Email ANY_EMAIL = Email.of("user@example.com");

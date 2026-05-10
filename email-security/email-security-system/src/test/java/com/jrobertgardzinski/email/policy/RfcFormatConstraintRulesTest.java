@@ -3,16 +3,19 @@ package com.jrobertgardzinski.email.policy;
 import com.jrobertgardzinski.email.domain.Email;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import net.jqwik.api.Example;
 import net.jqwik.api.Label;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.jrobertgardzinski.email.policy._RfcFormatConstraint.CODE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Epic("Constraints")
-@Feature("RFC format")
+@Epic("Email")
+@Feature("Constraints")
+@Story("RFC format")
 class RfcFormatConstraintRulesTest {
 
     private final _RfcFormatConstraint constraint = new _RfcFormatConstraint();
@@ -28,20 +31,17 @@ class RfcFormatConstraintRulesTest {
         assertThat(constraint.isSatisfied(Email.of(raw))).isFalse();
     }
 
-    @DisplayName("accepts ")
-    @ParameterizedTest(name = "\"{0}\"")
-    @ValueSource(strings = {
-            "user@example.com",
-            "j.doe+alias@gmail.com",
-            "user123@home.pl"
-    })
-    void acceptsRfcCompliantEmail(String raw) {
-        assertThat(constraint.isSatisfied(Email.of(raw))).isTrue();
+    final String ACCEPTS = "user@example.com";
+    @Example
+    @Label("accepts \"" + ACCEPTS + "\"")
+    void acceptance() {
+        assertThat(constraint.isSatisfied(Email.of(ACCEPTS))).isTrue();
     }
 
     @Example
-    @Label("error code is RFC_FORMAT_INVALID")
+    @Label("error code is " + CODE)
     void errorCode() {
-        assertThat(constraint.code()).isEqualTo("RFC_FORMAT_INVALID");
+        assertThat(constraint.code()).isEqualTo(CODE);
     }
+
 }

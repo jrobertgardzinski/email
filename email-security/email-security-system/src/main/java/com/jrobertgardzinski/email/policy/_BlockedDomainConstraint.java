@@ -8,6 +8,7 @@ import java.util.Set;
 
 class _BlockedDomainConstraint extends ErrorConstraint<Email> {
 
+    static final String CODE = "DOMAIN_BLOCKED";
     private final Set<DomainPart> blockedDomains;
 
     _BlockedDomainConstraint(Set<DomainPart> blockedDomains) {
@@ -21,6 +22,6 @@ class _BlockedDomainConstraint extends ErrorConstraint<Email> {
 
     @Override
     public String code() {
-        return "DOMAIN_BLOCKED";
+        return CODE;
     }
 }

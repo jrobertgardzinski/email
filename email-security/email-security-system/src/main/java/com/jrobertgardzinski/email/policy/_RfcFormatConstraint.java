@@ -13,6 +13,7 @@ class _RfcFormatConstraint extends ErrorConstraint<Email> {
                     "[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?" +
                     "(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
     );
+    static final String CODE = "RFC_FORMAT_INVALID";
 
     @Override
     public boolean isSatisfied(Email candidate) {
@@ -21,6 +22,6 @@ class _RfcFormatConstraint extends ErrorConstraint<Email> {
 
     @Override
     public String code() {
-        return "RFC_FORMAT_INVALID";
+        return CODE;
     }
 }

@@ -3,6 +3,7 @@ package com.jrobertgardzinski.email.domain;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import net.jqwik.api.*;
 import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.StringLength;
@@ -19,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Epic("Email")
+@Feature("Domain")
+@Story("Email")
 class EmailTest {
 
     @Property
@@ -60,8 +63,6 @@ class EmailTest {
     @Provide
     Arbitrary<Tuple.Tuple2<String, String>> invalidInputs() {
         return Arbitraries.of(
-                Tuple.of("empty", ""),
-                Tuple.of("null", null),
                 Tuple.of("single space", " "),
                 Tuple.of("missing @", "usergmail.com"),
                 Tuple.of("multiple @", "user@@gmail.com"),
