@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,17 +35,23 @@ class DomainPartTest {
     }
 
     @Feature("Domain normalization")
-    @DisplayName("normalizes ")
-    @ParameterizedTest(name = "\"{0}\" to lowercase \"{1}\" by default")
-    @CsvSource({
-            "GMAIL.COM,       gmail.com",
-            "Gmail.Com,       gmail.com",
-            "googlemail.com,  googlemail.com",
-            "HOME.PL,         home.pl",
-            "Booking.Co.Uk,   booking.co.uk"
-    })
-    void normalizesToLowercaseByDefault(String input, String expected) {
-        assertThat(DomainPart.of(input.trim()).value()).isEqualTo(expected.trim());
+    @Property
+    void normalizesToLowercaseByDefault(@ForAll("toNormalized") Normalization normalization) {
+        Allure.parameter("normalizes", String.format("%s -> %s", normalization.entered, normalization.expected));
+        assertThat(DomainPart.of(normalization.entered()).value()).isEqualTo(normalization.expected());
+    }
+
+    record Normalization(String entered, String expected) {}
+
+    @Provide
+    Arbitrary<Normalization> toNormalized() {
+        return Arbitraries.of(
+                new Normalization("GMAIL.COM", "gmail.com"),
+                new Normalization("Gmail.Com", "gmail.com"),
+                new Normalization("googlemail.com", "googlemail.com"),
+                new Normalization("HOME.PL", "home.pl"),
+                new Normalization("Booking.Co.Uk", "booking.co.uk")
+        );
     }
 
     @Provide
