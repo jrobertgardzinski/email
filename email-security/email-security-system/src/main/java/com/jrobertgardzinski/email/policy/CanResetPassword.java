@@ -1,36 +1,21 @@
 package com.jrobertgardzinski.email.policy;
 
 import com.jrobertgardzinski.email.domain.Email;
-import com.jrobertgardzinski.util.constraint.Constraint;
+import com.jrobertgardzinski.util.constraint.Constraints;
+import com.jrobertgardzinski.util.constraint.Decision;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 
 import java.util.List;
-import java.util.Set;
 
 public class CanResetPassword {
 
-    private final List<ErrorConstraint<Email>> errorConstraints;
+    private final Constraints<Email> constraints;
 
     public CanResetPassword(List<ErrorConstraint<Email>> errorConstraints) {
-        this.errorConstraints = errorConstraints;
+        this.constraints = new Constraints<>(errorConstraints);
     }
 
     public Decision evaluate(Email email) {
-        List<String> codes = errorConstraints.stream()
-                .filter(el -> !el.isSatisfied(email))
-                .map(Constraint::code)
-                .toList();
-        return codes.isEmpty() ?
-                new Decision.Allowed() :
-                new Decision.Rejected(codes);
+        return constraints.decide(email);
     }
-
-    public interface Decision {
-        record Rejected(
-                List<String> errorCodes) implements Decision {
-        }
-
-        record Allowed() implements Decision {}
-    }
-
 }
