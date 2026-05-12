@@ -3,7 +3,8 @@ package com.jrobertgardzinski.email.policy;
 import com.jrobertgardzinski.email.config.port.EmailConfigPort;
 import com.jrobertgardzinski.email.domain.Email;
 import com.jrobertgardzinski.email.external.MxRecordPort;
-import com.jrobertgardzinski.util.constraint.Constraint;
+import com.jrobertgardzinski.util.constraint.Constraints;
+import com.jrobertgardzinski.util.constraint.Decision;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 import com.jrobertgardzinski.util.constraint.WarningConstraint;
 
@@ -11,12 +12,10 @@ import java.util.List;
 
 public class CanRegister {
 
-    private final List<ErrorConstraint<Email>> errorConstraints;
-    private final WarningConstraint<Email> warningConstraints;
+    private final Constraints<Email> constraints;
 
-    CanRegister(List<ErrorConstraint<Email>> errorConstraints, WarningConstraint<Email> warningConstraints) {
-        this.errorConstraints = errorConstraints;
-        this.warningConstraints = warningConstraints;
+    CanRegister(List<ErrorConstraint<Email>> errorConstraints, WarningConstraint<Email> warningConstraint) {
+        this.constraints = new Constraints<>(errorConstraints, warningConstraint);
     }
 
     public static CanRegister configurable(EmailConfigPort emailConfigPort, MxRecordPort mxRecordPort) {
@@ -32,25 +31,6 @@ public class CanRegister {
     }
 
     public Decision evaluate(Email email) {
-        List<String> codes = errorConstraints.stream()
-                .filter(el -> !el.isSatisfied(email))
-                .map(Constraint::code)
-                .toList();
-
-        if (!codes.isEmpty()) {
-            return new Decision.Rejected(codes);
-        }
-
-        boolean mxRecordExists = warningConstraints.isSatisfied(email);
-
-        return mxRecordExists ?
-                new Decision.Allowed() :
-                new Decision.AllowedWithWarning(warningConstraints.code());
-    }
-
-    public interface Decision {
-        record Rejected(List<String> errorCodes) implements Decision {}
-        record Allowed() implements Decision {}
-        record AllowedWithWarning(String code) implements Decision {}
+        return constraints.decide(email);
     }
 }

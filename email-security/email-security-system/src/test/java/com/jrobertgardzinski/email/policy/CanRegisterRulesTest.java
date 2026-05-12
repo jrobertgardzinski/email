@@ -2,6 +2,7 @@ package com.jrobertgardzinski.email.policy;
 
 import com.jrobertgardzinski.email.domain.DomainPart;
 import com.jrobertgardzinski.email.domain.Email;
+import com.jrobertgardzinski.util.constraint.Decision;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 import com.jrobertgardzinski.util.constraint.WarningConstraint;
 import io.qameta.allure.Allure;
@@ -40,9 +41,9 @@ class CanRegisterRulesTest {
     @MethodSource("constraintCases")
     void unsatisfiedConstraintCausesRejection(String name, String code, ErrorConstraint<Email> constraint) {
         CanRegister policy = new CanRegister(List.of(constraint), passingMx());
-        CanRegister.Decision decision = policy.evaluate(ANY_EMAIL);
-        assertThat(decision).isInstanceOf(CanRegister.Decision.Rejected.class);
-        assertThat(((CanRegister.Decision.Rejected) decision).errorCodes()).contains(code);
+        Decision decision = policy.evaluate(ANY_EMAIL);
+        assertThat(decision).isInstanceOf(Decision.Rejected.class);
+        assertThat(((Decision.Rejected) decision).errorCodes()).contains(code);
     }
 
     static Stream<Arguments> constraintCases() {
@@ -58,9 +59,9 @@ class CanRegisterRulesTest {
         Allure.parameter("broken constraints", expectedCodes);
 
         CanRegister policy = new CanRegister(new ArrayList<>(brokenConstraints), passingMx());
-        CanRegister.Decision decision = policy.evaluate(ANY_EMAIL);
-        assertThat(decision).isInstanceOf(CanRegister.Decision.Rejected.class);
-        assertThat(((CanRegister.Decision.Rejected) decision).errorCodes()).containsAll(expectedCodes);
+        Decision decision = policy.evaluate(ANY_EMAIL);
+        assertThat(decision).isInstanceOf(Decision.Rejected.class);
+        assertThat(((Decision.Rejected) decision).errorCodes()).containsAll(expectedCodes);
     }
 
     @Example
@@ -68,7 +69,7 @@ class CanRegisterRulesTest {
     void allConstraintsSatisfiedAllows() {
         CanRegister policy = new CanRegister(List.of(passing()), passingMx());
 
-        assertThat(policy.evaluate(ANY_EMAIL)).isInstanceOf(CanRegister.Decision.Allowed.class);
+        assertThat(policy.evaluate(ANY_EMAIL)).isInstanceOf(Decision.Allowed.class);
     }
 
     @Example
@@ -76,10 +77,10 @@ class CanRegisterRulesTest {
     void noMxAllowsWithWarning() {
         CanRegister policy = new CanRegister(List.of(passing()), failingMx("NO_MX_RECORD"));
 
-        CanRegister.Decision decision = policy.evaluate(ANY_EMAIL);
+        Decision decision = policy.evaluate(ANY_EMAIL);
 
-        assertThat(decision).isInstanceOf(CanRegister.Decision.AllowedWithWarning.class);
-        assertThat(((CanRegister.Decision.AllowedWithWarning) decision).code()).isEqualTo("NO_MX_RECORD");
+        assertThat(decision).isInstanceOf(Decision.AllowedWithWarning.class);
+        assertThat(((Decision.AllowedWithWarning) decision).warningCode()).isEqualTo("NO_MX_RECORD");
     }
 
     @Provide

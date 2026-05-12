@@ -1,6 +1,7 @@
 package com.jrobertgardzinski.email.policy;
 
 import com.jrobertgardzinski.email.domain.Email;
+import com.jrobertgardzinski.util.constraint.Decision;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
@@ -36,9 +37,9 @@ class CanResetPasswordRulesTest {
     @MethodSource("constraintCases")
     void unsatisfiedConstraintCausesRejection(String name, String code, ErrorConstraint<Email> constraint) {
         CanResetPassword policy = new CanResetPassword(List.of(constraint));
-        CanResetPassword.Decision decision = policy.evaluate(ANY_EMAIL);
-        assertThat(decision).isInstanceOf(CanResetPassword.Decision.Rejected.class);
-        assertThat(((CanResetPassword.Decision.Rejected) decision).errorCodes()).contains(code);
+        Decision decision = policy.evaluate(ANY_EMAIL);
+        assertThat(decision).isInstanceOf(Decision.Rejected.class);
+        assertThat(((Decision.Rejected) decision).errorCodes()).contains(code);
     }
 
     static Stream<Arguments> constraintCases() {
@@ -54,16 +55,16 @@ class CanResetPasswordRulesTest {
         Allure.parameter("broken constraints", expectedCodes);
 
         CanResetPassword policy = new CanResetPassword(new ArrayList<>(brokenConstraints));
-        CanResetPassword.Decision decision = policy.evaluate(ANY_EMAIL);
-        assertThat(decision).isInstanceOf(CanResetPassword.Decision.Rejected.class);
-        assertThat(((CanResetPassword.Decision.Rejected) decision).errorCodes()).containsAll(expectedCodes);
+        Decision decision = policy.evaluate(ANY_EMAIL);
+        assertThat(decision).isInstanceOf(Decision.Rejected.class);
+        assertThat(((Decision.Rejected) decision).errorCodes()).containsAll(expectedCodes);
     }
 
     @Example
     @Label("all constraints satisfied → allowed")
     void allConstraintsSatisfiedAllows() {
         CanResetPassword policy = new CanResetPassword(List.of(passing()));
-        assertThat(policy.evaluate(ANY_EMAIL)).isInstanceOf(CanResetPassword.Decision.Allowed.class);
+        assertThat(policy.evaluate(ANY_EMAIL)).isInstanceOf(Decision.Allowed.class);
     }
 
     @Provide
