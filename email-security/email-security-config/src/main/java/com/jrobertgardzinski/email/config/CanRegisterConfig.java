@@ -1,14 +1,10 @@
 package com.jrobertgardzinski.email.config;
 
-import com.jrobertgardzinski.config.domain.RepositoryKey;
-import com.jrobertgardzinski.config.source.repository.RepositoryConfigPort;
-import com.jrobertgardzinski.config.source.repository.RepositoryConfigSource;
 import com.jrobertgardzinski.email.config.port.EmailConfigPort;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public record CanRegisterConfig(
         BlockedDomains blockedDomains,
