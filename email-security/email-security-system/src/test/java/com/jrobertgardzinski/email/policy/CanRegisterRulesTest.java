@@ -40,7 +40,7 @@ class CanRegisterRulesTest {
     @ParameterizedTest(name = "{1} when \"{0}\" is unsatisfied")
     @MethodSource("constraintCases")
     void unsatisfiedConstraintCausesRejection(String name, String code, ErrorConstraint<Email> constraint) {
-        CanRegister policy = new CanRegister(List.of(constraint), passingMx());
+        CanRegister policy = new CanRegister(List.of(constraint), List.of(passingMx()));
         Decision decision = policy.evaluate(ANY_EMAIL);
         assertThat(decision).isInstanceOf(Decision.Rejected.class);
         assertThat(((Decision.Rejected) decision).errorCodes()).contains(code);
@@ -58,7 +58,7 @@ class CanRegisterRulesTest {
         Allure.parameter("OTHER_CONSTRAINTS", CONSTRAINTS);
         Allure.parameter("broken constraints", expectedCodes);
 
-        CanRegister policy = new CanRegister(new ArrayList<>(brokenConstraints), passingMx());
+        CanRegister policy = new CanRegister(new ArrayList<>(brokenConstraints), List.of(passingMx()));
         Decision decision = policy.evaluate(ANY_EMAIL);
         assertThat(decision).isInstanceOf(Decision.Rejected.class);
         assertThat(((Decision.Rejected) decision).errorCodes()).containsAll(expectedCodes);
@@ -67,7 +67,7 @@ class CanRegisterRulesTest {
     @Example
     @Label("all constraints satisfied → allowed")
     void allConstraintsSatisfiedAllows() {
-        CanRegister policy = new CanRegister(List.of(passing()), passingMx());
+        CanRegister policy = new CanRegister(List.of(passing()), List.of(passingMx()));
 
         assertThat(policy.evaluate(ANY_EMAIL)).isInstanceOf(Decision.Allowed.class);
     }
@@ -75,12 +75,12 @@ class CanRegisterRulesTest {
     @Example
     @Label("all error constraints satisfied, MX absent → allowed with \"NO_MX_RECORD\" warning")
     void noMxAllowsWithWarning() {
-        CanRegister policy = new CanRegister(List.of(passing()), failingMx("NO_MX_RECORD"));
+        CanRegister policy = new CanRegister(List.of(passing()), List.of(failingMx("NO_MX_RECORD")));
 
         Decision decision = policy.evaluate(ANY_EMAIL);
 
         assertThat(decision).isInstanceOf(Decision.AllowedWithWarning.class);
-        assertThat(((Decision.AllowedWithWarning) decision).warningCode()).isEqualTo("NO_MX_RECORD");
+        assertThat(((Decision.AllowedWithWarning) decision).warningCodes()).containsExactly("NO_MX_RECORD");
     }
 
     @Provide

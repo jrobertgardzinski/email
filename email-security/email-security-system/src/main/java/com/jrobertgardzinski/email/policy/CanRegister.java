@@ -1,6 +1,8 @@
 package com.jrobertgardzinski.email.policy;
 
-import com.jrobertgardzinski.email.config.port.EmailConfigPort;
+import com.jrobertgardzinski.email.config.BlockedDomains;
+import com.jrobertgardzinski.email.config.CompanyDomains;
+import com.jrobertgardzinski.email.config.DisposableDomains;
 import com.jrobertgardzinski.email.domain.Email;
 import com.jrobertgardzinski.email.external.MxRecordPort;
 import com.jrobertgardzinski.util.constraint.Constraints;
@@ -8,29 +10,63 @@ import com.jrobertgardzinski.util.constraint.Decision;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 import com.jrobertgardzinski.util.constraint.WarningConstraint;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CanRegister {
 
     private final Constraints<Email> constraints;
 
-    CanRegister(List<ErrorConstraint<Email>> errorConstraints, WarningConstraint<Email> warningConstraint) {
-        this.constraints = new Constraints<>(errorConstraints, warningConstraint);
+    CanRegister(List<ErrorConstraint<Email>> errorConstraints, List<WarningConstraint<Email>> warningConstraints) {
+        this.constraints = new Constraints<>(errorConstraints, warningConstraints);
     }
 
-    public static CanRegister configurable(EmailConfigPort emailConfigPort, MxRecordPort mxRecordPort) {
-        return new CanRegister(
-                List.of(
-                        new _RfcFormatConstraint(),
-                        new _DisposableEmailConstraint(emailConfigPort.disposableDomains().values()),
-                        new _BlockedDomainConstraint(emailConfigPort.blockedDomains().values()),
-                        new _IsEmployeeConstraint(emailConfigPort.companyDomains().values())
-                ),
-                new _MxRecordConstraint(mxRecordPort)
-        );
+    public static Builder builder() {
+        return new Builder();
     }
 
     public Decision evaluate(Email email) {
         return constraints.decide(email);
+    }
+
+    public static final class Builder {
+        private final List<ErrorConstraint<Email>> errors = new ArrayList<>();
+        private final List<WarningConstraint<Email>> warnings = new ArrayList<>();
+
+        private Builder() {
+            errors.add(new _RfcFormatConstraint());
+        }
+
+        public Builder blockingDomains(BlockedDomains blocked) {
+            if (blocked != null) {
+                errors.add(new _BlockedDomainConstraint(blocked.values()));
+            }
+            return this;
+        }
+
+        public Builder blockingDisposable(DisposableDomains disposable) {
+            if (disposable != null) {
+                errors.add(new _DisposableEmailConstraint(disposable.values()));
+            }
+            return this;
+        }
+
+        public Builder requiringCompanyEmployee(CompanyDomains companyDomains) {
+            if (companyDomains != null) {
+                errors.add(new _IsEmployeeConstraint(companyDomains.values()));
+            }
+            return this;
+        }
+
+        public Builder warningOnMissingMx(MxRecordPort mxRecordPort) {
+            if (mxRecordPort != null) {
+                warnings.add(new _MxRecordConstraint(mxRecordPort));
+            }
+            return this;
+        }
+
+        public CanRegister build() {
+            return new CanRegister(errors, warnings);
+        }
     }
 }
