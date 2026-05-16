@@ -25,7 +25,7 @@ public class CanRegister {
         return new Builder();
     }
 
-    public Decision evaluate(Email email) {
+    public Decision<Email> evaluate(Email email) {
         return constraints.decide(email);
     }
 

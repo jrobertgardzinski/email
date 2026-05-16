@@ -37,9 +37,9 @@ class CanResetPasswordRulesTest {
     @MethodSource("constraintCases")
     void unsatisfiedConstraintCausesRejection(String name, String code, ErrorConstraint<Email> constraint) {
         CanResetPassword policy = new CanResetPassword(List.of(constraint));
-        Decision decision = policy.evaluate(ANY_EMAIL);
+        Decision<Email> decision = policy.evaluate(ANY_EMAIL);
         assertThat(decision).isInstanceOf(Decision.Rejected.class);
-        assertThat(((Decision.Rejected) decision).errorCodes()).contains(code);
+        assertThat(decision.errorCodes()).contains(code);
     }
 
     static Stream<Arguments> constraintCases() {
@@ -55,9 +55,9 @@ class CanResetPasswordRulesTest {
         Allure.parameter("broken constraints", expectedCodes);
 
         CanResetPassword policy = new CanResetPassword(new ArrayList<>(brokenConstraints));
-        Decision decision = policy.evaluate(ANY_EMAIL);
+        Decision<Email> decision = policy.evaluate(ANY_EMAIL);
         assertThat(decision).isInstanceOf(Decision.Rejected.class);
-        assertThat(((Decision.Rejected) decision).errorCodes()).containsAll(expectedCodes);
+        assertThat(decision.errorCodes()).containsAll(expectedCodes);
     }
 
     @Example

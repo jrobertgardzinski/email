@@ -15,7 +15,7 @@ public class CanResetPassword {
         this.constraints = new Constraints<>(errorConstraints);
     }
 
-    public Decision evaluate(Email email) {
+    public Decision<Email> evaluate(Email email) {
         return constraints.decide(email);
     }
 }
