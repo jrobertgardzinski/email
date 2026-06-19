@@ -1,8 +1,8 @@
 package com.jrobertgardzinski.email.policy;
 
 import com.jrobertgardzinski.email.domain.Email;
-import com.jrobertgardzinski.util.constraint.Decision;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
+import com.jrobertgardzinski.util.constraint.Outcome;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -38,9 +38,9 @@ class CanResetPasswordRulesTest {
     @MethodSource("constraintCases")
     void unsatisfiedConstraintCausesRejection(String name, String code, ErrorConstraint<Email> constraint) {
         CanResetPassword policy = new CanResetPassword(List.of(constraint));
-        Decision<Email> decision = policy.evaluate(ANY_EMAIL);
-        assertThat(decision).isInstanceOf(Decision.Rejected.class);
-        assertThat(decision.errorCodes()).contains(code);
+        Outcome<Email> emailOutcome = policy.evaluate(ANY_EMAIL);
+        assertThat(emailOutcome).isInstanceOf(Outcome.class);
+        assertThat(emailOutcome.errorCodes()).contains(code);
     }
 
     static Stream<Arguments> constraintCases() {
@@ -56,16 +56,16 @@ class CanResetPasswordRulesTest {
         Allure.parameter("broken constraints", expectedCodes);
 
         CanResetPassword policy = new CanResetPassword(new ArrayList<>(brokenConstraints));
-        Decision<Email> decision = policy.evaluate(ANY_EMAIL);
-        assertThat(decision).isInstanceOf(Decision.Rejected.class);
-        assertThat(decision.errorCodes()).containsAll(expectedCodes);
+        Outcome<Email> emailOutcome = policy.evaluate(ANY_EMAIL);
+        assertThat(emailOutcome).isInstanceOf(Outcome.class);
+        assertThat(emailOutcome.errorCodes()).containsAll(expectedCodes);
     }
 
     @Example
     @Label("all constraints satisfied → allowed")
     void allConstraintsSatisfiedAllows() {
         CanResetPassword policy = new CanResetPassword(List.of(passing()));
-        assertThat(policy.evaluate(ANY_EMAIL)).isInstanceOf(Decision.Allowed.class);
+        assertThat(policy.evaluate(ANY_EMAIL)).isInstanceOf(Outcome.Allowed.class);
     }
 
     @Provide
