@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Story("CanResetPassword")
 class CanResetPasswordRulesTest {
 
-    private static final Email ANY_EMAIL = Email.of("user@example.com");
+    private static final Supplier<Email> ANY_EMAIL = () -> Email.of("user@example.com");
 
     private static final List<ErrorConstraint<Email>> CONSTRAINTS = List.of(
             alwaysFailing(new _RfcFormatConstraint()),

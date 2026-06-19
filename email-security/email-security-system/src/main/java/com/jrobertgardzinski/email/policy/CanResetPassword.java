@@ -6,6 +6,7 @@ import com.jrobertgardzinski.util.constraint.Decision;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class CanResetPassword {
 
@@ -15,7 +16,7 @@ public class CanResetPassword {
         this.constraints = new Constraints<>(errorConstraints);
     }
 
-    public Decision<Email> evaluate(Email email) {
+    public Decision<Email> evaluate(Supplier<Email> email) {
         return constraints.decide(email);
     }
 }

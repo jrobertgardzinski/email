@@ -12,6 +12,7 @@ import com.jrobertgardzinski.util.constraint.WarningConstraint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class CanRegister {
 
@@ -25,7 +26,7 @@ public class CanRegister {
         return new Builder();
     }
 
-    public Decision<Email> evaluate(Email email) {
+    public Decision<Email> evaluate(Supplier<Email> email) {
         return constraints.decide(email);
     }
 
