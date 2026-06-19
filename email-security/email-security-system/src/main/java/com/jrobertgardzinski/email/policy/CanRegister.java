@@ -5,10 +5,7 @@ import com.jrobertgardzinski.email.config.CompanyDomains;
 import com.jrobertgardzinski.email.config.DisposableDomains;
 import com.jrobertgardzinski.email.domain.Email;
 import com.jrobertgardzinski.email.external.MxRecordPort;
-import com.jrobertgardzinski.util.constraint.Constraints;
-import com.jrobertgardzinski.util.constraint.Decision;
-import com.jrobertgardzinski.util.constraint.ErrorConstraint;
-import com.jrobertgardzinski.util.constraint.WarningConstraint;
+import com.jrobertgardzinski.util.constraint.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +23,8 @@ public class CanRegister {
         return new Builder();
     }
 
-    public Decision<Email> evaluate(Supplier<Email> email) {
-        return constraints.decide(email);
+    public Outcome<Email> evaluate(Supplier<Email> email) {
+        return constraints.validate(email);
     }
 
     public static final class Builder {
