@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>email-security-system</module>
+        <module>email-security-usecase</module>
         <module>email-security-config</module>
     </modules>
 
