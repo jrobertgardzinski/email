@@ -23,6 +23,8 @@ public final class InvalidEmailException extends IllegalArgumentException {
     public static final String LOCAL_PART_EMPTY = "LOCAL_PART_EMPTY";
     /** The part before the '@' starts or ends with a dot. */
     public static final String LOCAL_PART_DOT_AT_EDGE = "LOCAL_PART_DOT_AT_EDGE";
+    /** The part before the '@' carries two dots in a row, which separates nothing. */
+    public static final String LOCAL_PART_CONSECUTIVE_DOTS = "LOCAL_PART_CONSECUTIVE_DOTS";
     /** Nothing after the '@'. */
     public static final String DOMAIN_EMPTY = "DOMAIN_EMPTY";
     /** The domain carries no dot, so it can name no registrable host. */

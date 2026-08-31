@@ -29,7 +29,10 @@ class LocalPartTest {
     Arbitrary<Tuple.Tuple2<String, String>> invalidInputs() {
         return Arbitraries.of(
                 Tuple.of("leading dot", ".john"),
-                Tuple.of("trailing dot", "john.")
+                Tuple.of("trailing dot", "john."),
+                Tuple.of("two dots in a row", "a..b"),
+                Tuple.of("three dots in a row", "a...b"),
+                Tuple.of("dots in a row further along", "john..doe.smith")
         );
     }
 
@@ -47,6 +50,31 @@ class LocalPartTest {
                 Tuple.of("with dot", "j.doe"),
                 Tuple.of("with alias", "j.doe+spam"),
                 Tuple.of("alphanumeric", "user123")
+        );
+    }
+
+    record Refusal(String input, String code) {}
+
+    /**
+     * The CODE is what a client branches on and a UI translates, so it is contract, not detail.
+     * These are the same refusals as above, read by their name rather than by their sentence.
+     */
+    @Property
+    @Label("Invariant: a refusal names itself with a code")
+    void refusalNamesItself(@ForAll("refusals") Refusal refusal) {
+        Allure.parameter(refusal.input, refusal.code);
+        InvalidEmailException thrown =
+                assertThrows(InvalidEmailException.class, () -> LocalPart.of(refusal.input));
+        assertThat(thrown.code()).isEqualTo(refusal.code);
+    }
+
+    @Provide
+    Arbitrary<Refusal> refusals() {
+        return Arbitraries.of(
+                new Refusal("", InvalidEmailException.LOCAL_PART_EMPTY),
+                new Refusal(".john", InvalidEmailException.LOCAL_PART_DOT_AT_EDGE),
+                new Refusal("john.", InvalidEmailException.LOCAL_PART_DOT_AT_EDGE),
+                new Refusal("a..b", InvalidEmailException.LOCAL_PART_CONSECUTIVE_DOTS)
         );
     }
 
