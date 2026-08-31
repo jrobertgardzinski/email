@@ -13,10 +13,11 @@ public final class LocalPart {
 
     public static LocalPart of(String value) {
         if (value == null || value.isEmpty()) {
-            throw new IllegalArgumentException("Email local part must not be empty");
+            throw new InvalidEmailException(InvalidEmailException.LOCAL_PART_EMPTY, "Email local part must not be empty");
         }
         if (value.startsWith(".") || value.endsWith(".")) {
-            throw new IllegalArgumentException("Email local part must not start or end with a dot: " + value);
+            throw new InvalidEmailException(InvalidEmailException.LOCAL_PART_DOT_AT_EDGE,
+                    "Email local part must not start or end with a dot: " + value);
         }
         return new LocalPart(value);
     }

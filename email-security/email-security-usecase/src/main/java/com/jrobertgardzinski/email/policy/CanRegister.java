@@ -24,7 +24,7 @@ public class CanRegister {
     }
 
     public Outcome<Email> evaluate(Supplier<Email> email) {
-        return constraints.validate(email);
+        return _EmailCandidate.evaluate(constraints, email);
     }
 
     public static final class Builder {
