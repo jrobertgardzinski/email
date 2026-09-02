@@ -8,6 +8,9 @@ import com.jrobertgardzinski.util.constraint.Outcome;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * Judges whether an address may reset its password, against the rules it was built with.
+ */
 public class CanResetPassword {
 
     private final Constraints<Email> constraints;

@@ -6,6 +6,9 @@ import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 
 import java.util.Set;
 
+/**
+ * Fails an address from a disposable-mailbox domain.
+ */
 class _DisposableEmailConstraint extends ErrorConstraint<Email> {
 
     static final String CODE = "DISPOSABLE_DOMAIN";

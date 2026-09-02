@@ -6,6 +6,9 @@ import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 
 import java.util.Set;
 
+/**
+ * Fails an address from a blocked domain.
+ */
 class _BlockedDomainConstraint extends ErrorConstraint<Email> {
 
     static final String CODE = "DOMAIN_BLOCKED";

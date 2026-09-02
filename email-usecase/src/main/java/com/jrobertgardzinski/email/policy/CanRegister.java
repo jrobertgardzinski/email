@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * Judges whether an address may register: RFC format always, the domain rules it was built with.
+ */
 public class CanRegister {
 
     private final Constraints<Email> constraints;

@@ -6,6 +6,9 @@ import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 
 import java.util.Set;
 
+/**
+ * Fails an address outside the company domains, when any are set.
+ */
 class _IsEmployeeConstraint extends ErrorConstraint<Email> {
 
     static final String CODE = "NOT_A_COMPANY_DOMAIN";

@@ -5,6 +5,9 @@ import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 
 import java.util.regex.Pattern;
 
+/**
+ * Fails an address that is not RFC-shaped.
+ */
 class _RfcFormatConstraint extends ErrorConstraint<Email> {
 
     private static final Pattern RFC_PATTERN = Pattern.compile(

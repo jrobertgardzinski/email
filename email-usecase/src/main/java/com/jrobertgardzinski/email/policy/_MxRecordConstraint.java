@@ -4,6 +4,9 @@ import com.jrobertgardzinski.email.domain.Email;
 import com.jrobertgardzinski.email.external.MxRecordPort;
 import com.jrobertgardzinski.util.constraint.WarningConstraint;
 
+/**
+ * Warns about an address whose domain has no MX record.
+ */
 class _MxRecordConstraint extends WarningConstraint<Email> {
 
     static final String CODE = "NO_MX_RECORD";
