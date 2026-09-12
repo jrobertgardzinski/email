@@ -136,4 +136,27 @@ class LocalPartTest {
                 new Normalization("USER", "user")
         );
     }
+
+    @Label("Every other domain: case is not part of the identity either")
+    @Property
+    void normalizesAnyOtherDomain(@ForAll("ordinaryDomainNormalization") Normalization normalization) {
+        Allure.parameter("normalizes", String.format("%s -> %s", normalization.entered, normalization.expected));
+        assertThat(LocalPart.of(normalization.entered).normalize("corp.com").value())
+                .isEqualTo(normalization.expected);
+    }
+    @Provide
+    Arbitrary<Normalization> ordinaryDomainNormalization() {
+        // the local part is lower-cased for EVERY domain (2026-09-12). It used to be left alone
+        // outside the four big providers, so Alice@corp.com and alice@corp.com were two accounts
+        // and one person's sign-in answered "wrong password" to their own address in capitals.
+        return Arbitraries.of(
+                new Normalization("Alice", "alice"),
+                new Normalization("ALICE", "alice"),
+                new Normalization("alice", "alice"),
+                // and ONLY the case: a plus or a dot means something different on a corporate
+                // server than it does at gmail, and merging them would merge two people
+                new Normalization("A.Lice+team", "a.lice+team"),
+                new Normalization("First.Last-x", "first.last-x")
+        );
+    }
 }

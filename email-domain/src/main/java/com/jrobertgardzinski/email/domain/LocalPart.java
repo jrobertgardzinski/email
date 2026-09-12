@@ -31,21 +31,35 @@ public final class LocalPart {
 
     public String value() { return value; }
 
+    /**
+     * The form this address is DEDUPLICATED by — never what is shown or mailed to.
+     *
+     * <p>Case first, and for every domain. The RFC allows a mail server to treat the local part as
+     * case-sensitive, and essentially none does; what the old rule produced instead was two
+     * accounts for {@code Alice@corp.com} and {@code alice@corp.com}, a sign-in that answered
+     * "wrong password" to the same person typing the same address with a capital, and a
+     * per-(source, account) lockout counter that split across spellings — so guessing one account
+     * had as many budgets as the attacker had ways to write it. Only the four big providers were
+     * lower-cased, because that is where the PROVIDER-SPECIFIC rules below happen to live; the
+     * lower-casing was never provider-specific at all.
+     *
+     * <p>The rest stay exactly as they were: gmail ignores dots and everything after a '+',
+     * outlook and yahoo drop their own suffixes. Those ARE provider claims about their own address
+     * space, and stating them for a domain that never made them would merge two people's accounts.
+     */
     // todo should be DomainPart instead of String domain!
     public LocalPart normalize(String domain) {
+        String lower = value.toLowerCase();
         if (domain.equals("gmail.com") || domain.equals("googlemail.com")) {
-            return new LocalPart(value.toLowerCase().replaceAll("\\+.*", "").replace(".", ""));
+            return new LocalPart(lower.replaceAll("\\+.*", "").replace(".", ""));
         }
         if (domain.startsWith("yahoo.")) {
-            return new LocalPart(value.toLowerCase().replaceAll("-.*", ""));
+            return new LocalPart(lower.replaceAll("-.*", ""));
         }
         if (domain.equals("outlook.com") || domain.equals("hotmail.com") || domain.equals("live.com")) {
-            return new LocalPart(value.toLowerCase().replaceAll("\\+.*", ""));
+            return new LocalPart(lower.replaceAll("\\+.*", ""));
         }
-        if (domain.equals("icloud.com") || domain.equals("me.com") || domain.equals("mac.com")) {
-            return new LocalPart(value.toLowerCase());
-        }
-        return this;
+        return new LocalPart(lower);
     }
 
     @Override
