@@ -1,6 +1,7 @@
 package com.jrobertgardzinski.email.policy;
 
 import com.jrobertgardzinski.email.domain.Email;
+import com.jrobertgardzinski.email.domain.InvalidEmailException;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 import com.jrobertgardzinski.util.constraint.Outcome;
 import io.qameta.allure.Allure;
@@ -66,6 +67,24 @@ class CanResetPasswordRulesTest {
     void allConstraintsSatisfiedAllows() {
         CanResetPassword policy = new CanResetPassword(List.of(passing()));
         assertThat(policy.evaluate(ANY_EMAIL)).isInstanceOf(Outcome.Allowed.class);
+    }
+
+    /**
+     * The variant by its own name, on the second entry point of the same bridge: a supplier that
+     * cannot build the address never reaches the policy, and the refusal arrives as its own
+     * variant of {@link Outcome} carrying the invariant's CODE, not the exception's sentence.
+     */
+    @Example
+    @Label("a supplier that breaks a domain invariant → rejected due to invariant breakage, policy skipped")
+    void brokenInvariantIsItsOwnOutcomeVariant() {
+        CanResetPassword policy = new CanResetPassword(CONSTRAINTS);
+
+        Outcome<Email> emailOutcome = policy.evaluate(() -> Email.of("a..b@gmail.com"));
+
+        assertThat(emailOutcome).isInstanceOf(Outcome.RejectedDueToInvariantBreakage.class);
+        assertThat(emailOutcome.errorCodes())
+                .containsExactly(InvalidEmailException.LOCAL_PART_CONSECUTIVE_DOTS);
+        assertThat(emailOutcome.findValue()).isEmpty();
     }
 
     @Provide

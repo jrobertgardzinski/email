@@ -2,6 +2,7 @@ package com.jrobertgardzinski.email.policy;
 
 import com.jrobertgardzinski.email.domain.DomainPart;
 import com.jrobertgardzinski.email.domain.Email;
+import com.jrobertgardzinski.email.domain.InvalidEmailException;
 import com.jrobertgardzinski.util.constraint.ErrorConstraint;
 import com.jrobertgardzinski.util.constraint.Outcome;
 import com.jrobertgardzinski.util.constraint.WarningConstraint;
@@ -82,6 +83,45 @@ class CanRegisterRulesTest {
 
         assertThat(emailOutcome).isInstanceOf(Outcome.AllowedWithWarning.class);
         assertThat(((Outcome.AllowedWithWarning<Email>) emailOutcome).warningCodes()).containsExactly("NO_MX_RECORD");
+    }
+
+    /**
+     * The variant by its own name. Until now it was only reached through the registration
+     * scenario, which asserts the CODES and so cannot tell a broken invariant apart from a
+     * rejected policy — the two carry different variants of {@link Outcome} on purpose.
+     */
+    @DisplayName("Rejects due to invariant breakage with ")
+    @ParameterizedTest(name = "{1} when the supplier cannot build \"{0}\"")
+    @MethodSource("brokenInvariantCases")
+    void brokenInvariantIsItsOwnOutcomeVariant(String raw, String code) {
+        CanRegister policy = new CanRegister(List.of(passing()), List.of(passingMx()));
+
+        Outcome<Email> emailOutcome = policy.evaluate(() -> Email.of(raw));
+
+        assertThat(emailOutcome).isInstanceOf(Outcome.RejectedDueToInvariantBreakage.class);
+        assertThat(emailOutcome.errorCodes()).containsExactly(code);
+    }
+
+    static Stream<Arguments> brokenInvariantCases() {
+        return Stream.of(
+                Arguments.of("", InvalidEmailException.EMAIL_BLANK),
+                Arguments.of("no-at-sign", InvalidEmailException.EMAIL_FORMAT_INVALID),
+                Arguments.of(".user@example.com", InvalidEmailException.LOCAL_PART_DOT_AT_EDGE),
+                Arguments.of("a..b@gmail.com", InvalidEmailException.LOCAL_PART_CONSECUTIVE_DOTS),
+                Arguments.of("user@localhost", InvalidEmailException.DOMAIN_MISSING_DOT));
+    }
+
+    @Example
+    @Label("a broken invariant short-circuits the policy → only the invariant's code, no constraint code")
+    void brokenInvariantSkipsThePolicy() {
+        CanRegister policy = new CanRegister(CONSTRAINTS, List.of(failingMx("NO_MX_RECORD")));
+
+        Outcome<Email> emailOutcome = policy.evaluate(() -> Email.of("a..b@gmail.com"));
+
+        assertThat(emailOutcome).isInstanceOf(Outcome.RejectedDueToInvariantBreakage.class);
+        assertThat(emailOutcome.errorCodes())
+                .containsExactly(InvalidEmailException.LOCAL_PART_CONSECUTIVE_DOTS);
+        assertThat(emailOutcome.findValue()).isEmpty();
     }
 
     @Provide
