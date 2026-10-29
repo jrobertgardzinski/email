@@ -30,6 +30,10 @@ public class CanRegister {
         return _EmailCandidate.evaluate(constraints, email);
     }
 
+    public Outcome<Email> evaluate(Email email) {
+        constraints.
+    }
+
     public static final class Builder {
         private final List<ErrorConstraint<Email>> errors = new ArrayList<>();
         private final List<WarningConstraint<Email>> warnings = new ArrayList<>();
